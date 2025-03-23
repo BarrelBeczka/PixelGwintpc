@@ -11,13 +11,6 @@ public class BazaDanych {
     private static final String USER = "pixelgwint_u1";
     private static final String PASSWORD = "5636d5ca";
 
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Błąd podczas ładowania sterownika MySQL: " + e.getMessage());
-        }
-    }
 
     public static Connection polacz() {
         try {

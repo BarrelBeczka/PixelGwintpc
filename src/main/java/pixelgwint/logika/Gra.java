@@ -6,25 +6,25 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Gra {
-    private List<Karta> rzadBliskiGracz1 = new ArrayList<>();
-    private List<Karta> rzadSrodkowyGracz1 = new ArrayList<>();
-    private List<Karta> rzadDalszyGracz1 = new ArrayList<>();
-    private List<Karta> rzadBliskiGracz2 = new ArrayList<>();
-    private List<Karta> rzadSrodkowyGracz2 = new ArrayList<>();
-    private List<Karta> rzadDalszyGracz2 = new ArrayList<>();
-    private List<Karta> kartySpecjalneGracz1 = new ArrayList<>();
-    private List<Karta> kartySpecjalneGracz2 = new ArrayList<>();
-    private List<Karta> cmentarzGracz1 = new ArrayList<>();
-    private List<Karta> cmentarzGracz2 = new ArrayList<>();
-    private List<Karta> kartyPogodowe = new ArrayList<>();
-    private List<Karta> rekaGracz1;
-    private List<Karta> rekaGracz2;
-    private Karta dowodcaGracz1;
-    private Karta dowodcaGracz2;
+    private final List<Karta> rzadBliskiGracz1 = new ArrayList<>();
+    private final List<Karta> rzadSrodkowyGracz1 = new ArrayList<>();
+    private final List<Karta> rzadDalszyGracz1 = new ArrayList<>();
+    private final List<Karta> rzadBliskiGracz2 = new ArrayList<>();
+    private final List<Karta> rzadSrodkowyGracz2 = new ArrayList<>();
+    private final List<Karta> rzadDalszyGracz2 = new ArrayList<>();
+    private final List<Karta> kartySpecjalneGracz1 = new ArrayList<>();
+    private final List<Karta> kartySpecjalneGracz2 = new ArrayList<>();
+    private final List<Karta> cmentarzGracz1 = new ArrayList<>();
+    private final List<Karta> cmentarzGracz2 = new ArrayList<>();
+    private final List<Karta> kartyPogodowe = new ArrayList<>();
+    private final List<Karta> rekaGracz1;
+    private final List<Karta> rekaGracz2;
+    private final Karta dowodcaGracz1;
+    private final Karta dowodcaGracz2;
     private int aktualnyGracz;
 
-    private int zetonyZyciaGracz1 = 2;  // Żetony życia Gracza 1
-    private int zetonyZyciaGracz2 = 2;  // Żetony życia Gracza 2
+    private int zetonyZyciaGracz1 = 2;
+    private int zetonyZyciaGracz2 = 2;
 
     private boolean gracz1Pasowal = false;
     private boolean gracz2Pasowal = false;
@@ -32,26 +32,23 @@ public class Gra {
     public Gra(List<Karta> reka1, List<Karta> reka2, int pierwszyGracz, Karta dowodcaGracz1, Karta dowodcaGracz2) {
         this.rekaGracz1 = new ArrayList<>(reka1);
         this.rekaGracz2 = new ArrayList<>(reka2);
-        this.aktualnyGracz = pierwszyGracz + 1; // 1 lub 2
-        this.dowodcaGracz1 = dowodcaGracz1;  // Przypisz dowódcę Gracza 1
-        this.dowodcaGracz2 = dowodcaGracz2;  // Przypisz dowódcę Gracza 2
+        this.aktualnyGracz = pierwszyGracz + 1;
+        this.dowodcaGracz1 = dowodcaGracz1;
+        this.dowodcaGracz2 = dowodcaGracz2;
     }
 
     public void rozpocznijGre() {
         Scanner scanner = new Scanner(System.in);
 
         while (zetonyZyciaGracz1 > 0 && zetonyZyciaGracz2 > 0) {
-            System.out.println("\n Rozpoczyna się nowa runda!");
+            System.out.println("\nRozpoczyna się nowa runda!");
 
-            // Resetuj flagi spasowania na początku każdej rundy
             gracz1Pasowal = false;
             gracz2Pasowal = false;
 
-            // Rozpocznij rundę
             while (!czyKoniecRundy()) {
                 wyswietlPlansze();
 
-                // Sprawdź, czy aktualny gracz już spasował
                 if ((aktualnyGracz == 1 && gracz1Pasowal) || (aktualnyGracz == 2 && gracz2Pasowal)) {
                     System.out.println("Gracz " + aktualnyGracz + " już spasował i nie może wykonywać kolejnych ruchów.");
                     nastepnaTura();
@@ -59,8 +56,8 @@ public class Gra {
                 }
 
                 System.out.println("\nGracz " + aktualnyGracz + ", wybierz kartę do zagrania (lub 'pas'):");
-
                 String wybor = scanner.nextLine();
+
                 if (wybor.equalsIgnoreCase("pas")) {
                     System.out.println("Gracz " + aktualnyGracz + " spasował!");
                     if (aktualnyGracz == 1) {
@@ -69,7 +66,7 @@ public class Gra {
                         gracz2Pasowal = true;
                     }
                     if (gracz1Pasowal && gracz2Pasowal) {
-                        break;  // Runda kończy się, gdy obaj gracze spasują
+                        break;
                     }
                     nastepnaTura();
                     continue;
@@ -83,7 +80,6 @@ public class Gra {
                 }
             }
 
-            // Sprawdź, kto wygrał rundę
             int punktyGracz1 = obliczPunkty(1);
             int punktyGracz2 = obliczPunkty(2);
 
@@ -103,19 +99,18 @@ public class Gra {
                 zetonyZyciaGracz2--;
             }
 
-            // Wyczyść planszę po rundzie
             wyczyscPlansze();
         }
 
-        // Zakończenie gry
         if (zetonyZyciaGracz1 <= 0 && zetonyZyciaGracz2 <= 0) {
-            System.out.println("\n Remis! Oboje gracze stracili wszystkie żetony życia.");
+            System.out.println("\nRemis! Oboje gracze stracili wszystkie żetony życia.");
         } else if (zetonyZyciaGracz1 <= 0) {
-            System.out.println("\n Gracz 2 wygrywa grę!");
+            System.out.println("\nGracz 2 wygrywa grę!");
         } else {
-            System.out.println("\n Gracz 1 wygrywa grę!");
+            System.out.println("\nGracz 1 wygrywa grę!");
         }
     }
+
     public void zagrywajKarte(int indeks) {
         List<Karta> reka = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
 
@@ -126,15 +121,23 @@ public class Gra {
 
         Karta karta = reka.remove(indeks);
 
-        // Sprawdzamy, czy karta jest kartą pogodową po nazwie
-        if (karta.getNazwa().equalsIgnoreCase("Ulewny Deszcz") ||
+        // Prostsza obsługa kart pogodowych
+        if (karta.getNazwa().equalsIgnoreCase("Ulewny deszcz") ||
                 karta.getNazwa().equalsIgnoreCase("Trzaskający mróz") ||
-                karta.getNazwa().equalsIgnoreCase("Gęsta mgła") ||
-                karta.getNazwa().equalsIgnoreCase("Czyste niebo")) {
+                karta.getNazwa().equalsIgnoreCase("Gęsta mgła")) {
 
             kartyPogodowe.add(karta);
             System.out.println("Gracz " + aktualnyGracz + " zagrał kartę pogodową: " + karta.getNazwa());
-        } else if (karta.getNazwa().equalsIgnoreCase("Róg dowódcy")) {
+            nastepnaTura();
+            return;
+        }
+        else if (karta.getNazwa().equalsIgnoreCase("Czyste niebo")) {
+            kartyPogodowe.clear();
+            System.out.println("Gracz " + aktualnyGracz + " zagrał Czyste niebo - usunięto wszystkie efekty pogodowe!");
+            nastepnaTura();
+            return;
+        }
+        else if (karta.getNazwa().equalsIgnoreCase("Róg dowódcy")) {
             System.out.println("Wybierz rząd, na który chcesz zagrać kartę Róg dowódcy:");
             System.out.println("1. Bliskie starcie");
             System.out.println("2. Jednostki strzeleckie");
@@ -156,16 +159,16 @@ public class Gra {
                     break;
                 default:
                     System.out.println("Niepoprawny wybór rzędu!");
-                    reka.add(karta);  // Przywróć kartę do ręki
+                    reka.add(karta);
                     return;
             }
 
             wybranyRzad.add(karta);
             System.out.println("Gracz " + aktualnyGracz + " zagrał kartę Róg dowódcy na rząd " + wyborRzedu);
-        } else if (karta.getNazwa().equalsIgnoreCase("Manekin do ćwiczeń")) {
+        }
+        else if (karta.getNazwa().equalsIgnoreCase("Manekin do ćwiczeń")) {
             System.out.println("Wybierz kartę, którą chcesz podmienić z Manekinem do ćwiczeń:");
 
-            // Łączymy wszystkie rzędy w jedną listę kart
             List<Karta> poleGry = (aktualnyGracz == 1) ?
                     Stream.of(rzadBliskiGracz1, rzadSrodkowyGracz1, rzadDalszyGracz1)
                             .flatMap(List::stream)
@@ -176,7 +179,7 @@ public class Gra {
 
             int numerKarty = 1;
             for (Karta k : poleGry) {
-                System.out.println(numerKarty + ". " + k.getNazwa() + " (Siła: " + k.getSila() + ")");
+                System.out.println(numerKarty + ". " + k.getNazwa() + " (Siła: " + obliczRzeczywistaSile(k) + ")");
                 numerKarty++;
             }
 
@@ -185,60 +188,33 @@ public class Gra {
 
             if (wyborKarty >= 0 && wyborKarty < poleGry.size()) {
                 Karta kartaDoPodmiany = poleGry.get(wyborKarty);
-                // Usuń kartę z odpowiedniego rzędu
-                if (rzadBliskiGracz1.contains(kartaDoPodmiany)) rzadBliskiGracz1.remove(kartaDoPodmiany);
-                else if (rzadSrodkowyGracz1.contains(kartaDoPodmiany)) rzadSrodkowyGracz1.remove(kartaDoPodmiany);
-                else if (rzadDalszyGracz1.contains(kartaDoPodmiany)) rzadDalszyGracz1.remove(kartaDoPodmiany);
-                else if (rzadBliskiGracz2.contains(kartaDoPodmiany)) rzadBliskiGracz2.remove(kartaDoPodmiany);
-                else if (rzadSrodkowyGracz2.contains(kartaDoPodmiany)) rzadSrodkowyGracz2.remove(kartaDoPodmiany);
-                else if (rzadDalszyGracz2.contains(kartaDoPodmiany)) rzadDalszyGracz2.remove(kartaDoPodmiany);
-
-                // Dodaj Manekina do odpowiedniego rzędu
-                if (rzadBliskiGracz1.contains(kartaDoPodmiany)) rzadBliskiGracz1.add(karta);
-                else if (rzadSrodkowyGracz1.contains(kartaDoPodmiany)) rzadSrodkowyGracz1.add(karta);
-                else if (rzadDalszyGracz1.contains(kartaDoPodmiany)) rzadDalszyGracz1.add(karta);
-                else if (rzadBliskiGracz2.contains(kartaDoPodmiany)) rzadBliskiGracz2.add(karta);
-                else if (rzadSrodkowyGracz2.contains(kartaDoPodmiany)) rzadSrodkowyGracz2.add(karta);
-                else if (rzadDalszyGracz2.contains(kartaDoPodmiany)) rzadDalszyGracz2.add(karta);
-
+                usunKarteZRzedu(kartaDoPodmiany);
+                dodajKarteDoRzedu(karta, kartaDoPodmiany);
                 reka.add(kartaDoPodmiany);
                 System.out.println("Podmieniono kartę " + kartaDoPodmiany.getNazwa() + " z Manekinem do ćwiczeń.");
             } else {
                 System.out.println("Niepoprawny wybór karty!");
-                reka.add(karta);  // Przywróć kartę do ręki
+                reka.add(karta);
             }
-        } else if (karta.getNazwa().equalsIgnoreCase("Pożoga")) {
+        }
+        else if (karta.getNazwa().equalsIgnoreCase("Pożoga")) {
             System.out.println("Gracz " + aktualnyGracz + " używa karty Pożoga!");
 
-            // Znajdź najsilniejszą jednostkę na planszy
-            Karta najsilniejszaKarta = null;
-            int maxSila = -1;
-
-            for (List<Karta> rzad : List.of(rzadBliskiGracz1, rzadSrodkowyGracz1, rzadDalszyGracz1, rzadBliskiGracz2, rzadSrodkowyGracz2, rzadDalszyGracz2)) {
-                for (Karta k : rzad) {
-                    if (k.getSila() > maxSila && !k.getTyp().equalsIgnoreCase("Bohater")) {
-                        maxSila = k.getSila();
-                        najsilniejszaKarta = k;
-                    }
-                }
-            }
+            Karta najsilniejszaKarta = znajdzNajsilniejszaKarte();
 
             if (najsilniejszaKarta != null) {
                 System.out.println("Zniszczono kartę " + najsilniejszaKarta.getNazwa() + " (Siła: " + najsilniejszaKarta.getSila() + ")");
-                // Przenieś kartę do cmentarza
                 if (aktualnyGracz == 1) {
                     cmentarzGracz1.add(najsilniejszaKarta);
                 } else {
                     cmentarzGracz2.add(najsilniejszaKarta);
                 }
-                // Usuń kartę z planszy
-                for (List<Karta> rzad : List.of(rzadBliskiGracz1, rzadSrodkowyGracz1, rzadDalszyGracz1, rzadBliskiGracz2, rzadSrodkowyGracz2, rzadDalszyGracz2)) {
-                    rzad.remove(najsilniejszaKarta);
-                }
+                usunKarteZRzedu(najsilniejszaKarta);
             } else {
                 System.out.println("Nie ma kart do zniszczenia!");
             }
-        } else {
+        }
+        else {
             List<Karta> wybranyRzad = znajdzRzad(karta);
             if (wybranyRzad != null) {
                 wybranyRzad.add(karta);
@@ -250,6 +226,63 @@ public class Gra {
         }
 
         nastepnaTura();
+    }
+
+    private Karta znajdzNajsilniejszaKarte() {
+        Karta najsilniejszaKarta = null;
+        int maxSila = -1;
+
+        for (List<Karta> rzad : Arrays.asList(
+                rzadBliskiGracz1, rzadSrodkowyGracz1, rzadDalszyGracz1,
+                rzadBliskiGracz2, rzadSrodkowyGracz2, rzadDalszyGracz2)) {
+            for (Karta k : rzad) {
+                if (k.getSila() > maxSila && !k.getTyp().equalsIgnoreCase("Bohater")) {
+                    maxSila = k.getSila();
+                    najsilniejszaKarta = k;
+                }
+            }
+        }
+
+        return najsilniejszaKarta;
+    }
+
+    private void usunKarteZRzedu(Karta karta) {
+        rzadBliskiGracz1.remove(karta);
+        rzadSrodkowyGracz1.remove(karta);
+        rzadDalszyGracz1.remove(karta);
+        rzadBliskiGracz2.remove(karta);
+        rzadSrodkowyGracz2.remove(karta);
+        rzadDalszyGracz2.remove(karta);
+    }
+
+    private void dodajKarteDoRzedu(Karta karta, Karta kartaWzor) {
+        if (rzadBliskiGracz1.contains(kartaWzor)) rzadBliskiGracz1.add(karta);
+        else if (rzadSrodkowyGracz1.contains(kartaWzor)) rzadSrodkowyGracz1.add(karta);
+        else if (rzadDalszyGracz1.contains(kartaWzor)) rzadDalszyGracz1.add(karta);
+        else if (rzadBliskiGracz2.contains(kartaWzor)) rzadBliskiGracz2.add(karta);
+        else if (rzadSrodkowyGracz2.contains(kartaWzor)) rzadSrodkowyGracz2.add(karta);
+        else if (rzadDalszyGracz2.contains(kartaWzor)) rzadDalszyGracz2.add(karta);
+    }
+
+    private int obliczRzeczywistaSile(Karta karta) {
+        for (Karta pogoda : kartyPogodowe) {
+            if (pogoda.getNazwa().equalsIgnoreCase("Ulewny deszcz") &&
+                    karta.getPozycja().equalsIgnoreCase("Oblężnicze") &&
+                    !karta.getTyp().equalsIgnoreCase("Bohater")) {
+                return 1;
+            }
+            if (pogoda.getNazwa().equalsIgnoreCase("Trzaskający mróz") &&
+                    karta.getPozycja().equalsIgnoreCase("Bliskie starcie") &&
+                    !karta.getTyp().equalsIgnoreCase("Bohater")) {
+                return 1;
+            }
+            if (pogoda.getNazwa().equalsIgnoreCase("Gęsta mgła") &&
+                    karta.getPozycja().equalsIgnoreCase("Jednostki strzeleckie") &&
+                    !karta.getTyp().equalsIgnoreCase("Bohater")) {
+                return 1;
+            }
+        }
+        return karta.getSila();
     }
 
     private List<Karta> znajdzRzad(Karta karta) {
@@ -267,39 +300,32 @@ public class Gra {
         aktualnyGracz = (aktualnyGracz == 1) ? 2 : 1;
     }
 
-    public boolean czyKoniecGry() {
-        return rekaGracz1.isEmpty() && rekaGracz2.isEmpty();
-    }
-
     public void wyswietlPlansze() {
-        System.out.println("\n PLANSZA ");
+        System.out.println("\nPLANSZA");
 
         // Sekcja Gracza 1
         System.out.println("Żetony życia Gracza 1: (" + zetonyZyciaGracz1 + "/2)");
         System.out.println("Dowódca Gracza 1: " + (dowodcaGracz1 != null ? dowodcaGracz1.getNazwa() : "Brak"));
-        System.out.println("\n Cmentarz Gracza 1: " + wyswietlKarty(cmentarzGracz1));
+        System.out.println("\nCmentarz Gracza 1: " + wyswietlKarty(cmentarzGracz1));
 
-        wyswietlRzad(" Machiny oblężnicze", rzadDalszyGracz1);
-        wyswietlRzad(" Jednostki strzeleckie", rzadSrodkowyGracz1);
-        wyswietlRzad(" Bliskie starcie", rzadBliskiGracz1);
+        wyswietlRzad("Machiny oblężnicze", rzadDalszyGracz1);
+        wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz1);
+        wyswietlRzad("Bliskie starcie", rzadBliskiGracz1);
         System.out.println("----------------------------------------");
         System.out.println("Karty pogodowe: " + wyswietlKarty(kartyPogodowe));
         System.out.println("----------------------------------------");
 
-        wyswietlRzad(" Bliskie starcie", rzadBliskiGracz2);
-        wyswietlRzad(" Jednostki strzeleckie", rzadSrodkowyGracz2);
-        wyswietlRzad(" Machiny oblężnicze", rzadDalszyGracz2);
-        System.out.println(" Cmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
+        wyswietlRzad("Bliskie starcie", rzadBliskiGracz2);
+        wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz2);
+        wyswietlRzad("Machiny oblężnicze", rzadDalszyGracz2);
+        System.out.println("Cmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
 
-        System.out.println("\n Dowódca Gracza 2: " + (dowodcaGracz2 != null ? dowodcaGracz2.getNazwa() : "Brak"));
-        System.out.println(" Żetony życia Gracza 2: (" + zetonyZyciaGracz2 + "/2)");
+        System.out.println("\nDowódca Gracza 2: " + (dowodcaGracz2 != null ? dowodcaGracz2.getNazwa() : "Brak"));
+        System.out.println("Żetony życia Gracza 2: (" + zetonyZyciaGracz2 + "/2)");
 
         // Ręka aktualnego gracza
-        System.out.println("\n Ręka Gracza " + aktualnyGracz + ":");
+        System.out.println("\nRęka Gracza " + aktualnyGracz + ":");
         List<Karta> reka = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
-        wyswietlReke(reka);
-    }
-    public void wyswietlReke(List<Karta> reka) {
         for (int i = 0; i < reka.size(); i++) {
             Karta karta = reka.get(i);
             String umiejetnosc = karta.getUmiejetnosc().equalsIgnoreCase("Brak") ? "" : " (Umiejętność: " + karta.getUmiejetnosc() + ")";
@@ -308,14 +334,15 @@ public class Gra {
     }
 
     private void wyswietlRzad(String nazwa, List<Karta> rzad) {
-        int sumaSily = rzad.stream().mapToInt(Karta::getSila).sum();  // Oblicz sumę siły kart w rzędzie
+        int sumaSily = rzad.stream().mapToInt(this::obliczRzeczywistaSile).sum();
         System.out.print(nazwa + " (Siła: " + sumaSily + "): ");
 
         if (rzad.isEmpty()) {
             System.out.println("(pusto)");
         } else {
             for (Karta k : rzad) {
-                System.out.print("[" + k.getNazwa() + " (" + k.getSila() + ")] ");
+                int rzeczywistaSila = obliczRzeczywistaSile(k);
+                System.out.print("[" + k.getNazwa() + " (" + rzeczywistaSila + ")] ");
             }
             System.out.println();
         }
@@ -323,12 +350,11 @@ public class Gra {
 
     private String wyswietlKarty(List<Karta> karty) {
         if (karty.isEmpty()) return "Brak";
-        StringBuilder sb = new StringBuilder();
-        for (Karta k : karty) {
-            sb.append("[").append(k.getNazwa()).append("] ");
-        }
-        return sb.toString();
+        return karty.stream()
+                .map(Karta::getNazwa)
+                .collect(Collectors.joining("], [", "[", "]"));
     }
+
     public void wyczyscPlansze() {
         rzadBliskiGracz1.clear();
         rzadSrodkowyGracz1.clear();
@@ -341,37 +367,22 @@ public class Gra {
         cmentarzGracz1.clear();
         cmentarzGracz2.clear();
         kartyPogodowe.clear();
-
     }
-    public int obliczPunkty(int gracz) {
-        int suma = 0;
 
+    public int obliczPunkty(int gracz) {
         List<Karta> rzadBliski = (gracz == 1) ? rzadBliskiGracz1 : rzadBliskiGracz2;
         List<Karta> rzadSrodkowy = (gracz == 1) ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
         List<Karta> rzadDalszy = (gracz == 1) ? rzadDalszyGracz1 : rzadDalszyGracz2;
 
-        suma += rzadBliski.stream().mapToInt(Karta::getSila).sum();
-        suma += rzadSrodkowy.stream().mapToInt(Karta::getSila).sum();
-        suma += rzadDalszy.stream().mapToInt(Karta::getSila).sum();
-
-        return suma;
+        return rzadBliski.stream().mapToInt(this::obliczRzeczywistaSile).sum() +
+                rzadSrodkowy.stream().mapToInt(this::obliczRzeczywistaSile).sum() +
+                rzadDalszy.stream().mapToInt(this::obliczRzeczywistaSile).sum();
     }
+
     private boolean czyKoniecRundy() {
-        // Runda kończy się, gdy:
-        // 1. Obaj gracze spasowali
-        // 2. Obaj gracze nie mają już kart
-        // 3. Jeden gracz nie ma kart, a drugi spasował
         return (gracz1Pasowal && gracz2Pasowal) ||
                 (rekaGracz1.isEmpty() && rekaGracz2.isEmpty()) ||
                 (rekaGracz1.isEmpty() && gracz2Pasowal) ||
                 (rekaGracz2.isEmpty() && gracz1Pasowal);
-    }
-
-    public int getAktualnyGracz() {
-        return aktualnyGracz;
-    }
-
-    public List<Karta> getReka(int gracz) {
-        return (gracz == 1) ? rekaGracz1 : rekaGracz2;
     }
 }

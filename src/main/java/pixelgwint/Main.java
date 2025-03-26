@@ -322,13 +322,21 @@ public class Main {
         return null;
     }
     public static List<Karta> wymienKarty(List<Karta> rekaGracza, List<Karta> talia, Scanner scanner) {
-        System.out.println("\n Oto twoja wylosowana ręka:");
+        System.out.println("\nOto twoja wylosowana ręka:");
         wyswietlReke(rekaGracza);
 
+        // Tworzymy kopię talii bez dowódców
+        List<Karta> taliaBezDowodcy = new ArrayList<>();
+        for (Karta k : talia) {
+            if (!k.getTyp().equalsIgnoreCase("Dowódca")) {
+                taliaBezDowodcy.add(k);
+            }
+        }
+
         int liczbaZmian = 0;
-        while (liczbaZmian < 2) {
+        while (liczbaZmian < 2 && !taliaBezDowodcy.isEmpty()) {
             System.out.println("\nMożesz wymienić jeszcze " + (2 - liczbaZmian) + " karty.");
-            System.out.print("Wybierz kartę do zmiany lub wpisz Gotowe: ");
+            System.out.print("Wybierz kartę do zmiany (1-" + rekaGracza.size() + ") lub wpisz 'Gotowe': ");
             String wybor = scanner.nextLine();
 
             if (wybor.equalsIgnoreCase("Gotowe")) {
@@ -338,30 +346,22 @@ public class Main {
             try {
                 int numerKarty = Integer.parseInt(wybor) - 1;
                 if (numerKarty >= 0 && numerKarty < rekaGracza.size()) {
-                    // Usuń wybraną kartę z ręki gracza
+                    // Losujemy nową kartę
+                    Random random = new Random();
+                    int indexNowejKarty = random.nextInt(taliaBezDowodcy.size());
+                    Karta nowaKarta = taliaBezDowodcy.remove(indexNowejKarty);
+
+                    // Wymieniamy karty
                     Karta usunietaKarta = rekaGracza.remove(numerKarty);
+                    rekaGracza.add(nowaKarta);
+                    talia.add(usunietaKarta); // Oddajemy starą kartę do talii
 
-                    // Wylosuj nową kartę z talii (pomijając dowódców)
-                    Karta nowaKarta = null;
-                    for (Karta karta : talia) {
-                        if (!karta.getTyp().equalsIgnoreCase("Dowódca")) {
-                            nowaKarta = karta;
-                            talia.remove(karta);  // Usuń kartę z talii
-                            break;
-                        }
-                    }
+                    System.out.println("Wymieniono kartę: " + usunietaKarta.getNazwa() +
+                            " na: " + nowaKarta.getNazwa());
+                    liczbaZmian++;
 
-                    if (nowaKarta != null) {
-                        rekaGracza.add(nowaKarta);
-                        System.out.println("Wymieniono kartę: " + usunietaKarta.getNazwa() + " na: " + nowaKarta.getNazwa());
-                        liczbaZmian++;
-
-                        // Wyświetl zaktualizowaną rękę
-                        System.out.println("\n Twoja nowa ręka:");
-                        wyswietlReke(rekaGracza);
-                    } else {
-                        System.out.println("Brak dostępnych kart do wymiany");
-                    }
+                    System.out.println("\nTwoja nowa ręka:");
+                    wyswietlReke(rekaGracza);
                 } else {
                     System.out.println("Niepoprawny numer karty!");
                 }
@@ -369,7 +369,6 @@ public class Main {
                 System.out.println("Wpisz numer karty lub 'Gotowe'.");
             }
         }
-
         return rekaGracza;
     }
     public static void wyswietlReke(List<Karta> reka) {

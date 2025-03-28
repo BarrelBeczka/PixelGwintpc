@@ -41,6 +41,7 @@ public class Gra {
         this.taliaGracza1 = new ArrayList<>(talia1);
         this.taliaGracza2 = new ArrayList<>(talia2);
     }
+
     private void aktywujBraterstwo(Karta zagranaKarta, List<Karta> rzadZagrania) {
         // Pobierz pełną talię gracza (bez dowódcy)
         List<Karta> taliaGracza = (aktualnyGracz == 1) ? taliaGracza1 : taliaGracza2;
@@ -155,7 +156,7 @@ public class Gra {
 
         Karta karta = reka.remove(indeks);
 
-        // Prostsza obsługa kart pogodowych
+        // Obsługa kart pogodowych
         if (karta.getNazwa().equalsIgnoreCase("Ulewny deszcz") ||
                 karta.getNazwa().equalsIgnoreCase("Trzaskający mróz") ||
                 karta.getNazwa().equalsIgnoreCase("Gęsta mgła")) {
@@ -164,14 +165,12 @@ public class Gra {
             System.out.println("Gracz " + aktualnyGracz + " zagrał kartę pogodową: " + karta.getNazwa());
             nastepnaTura();
             return;
-        }
-        else if (karta.getNazwa().equalsIgnoreCase("Czyste niebo")) {
+        } else if (karta.getNazwa().equalsIgnoreCase("Czyste niebo")) {
             kartyPogodowe.clear();
             System.out.println("Gracz " + aktualnyGracz + " zagrał Czyste niebo - usunięto wszystkie efekty pogodowe!");
             nastepnaTura();
             return;
-        }
-        else if (karta.getNazwa().equalsIgnoreCase("Róg dowódcy")) {
+        } else if (karta.getNazwa().equalsIgnoreCase("Róg dowódcy")) {
             System.out.println("Wybierz rząd, na który chcesz zagrać kartę Róg dowódcy:");
             System.out.println("1. Bliskie starcie");
             System.out.println("2. Jednostki strzeleckie");
@@ -199,8 +198,7 @@ public class Gra {
 
             wybranyRzad.add(karta);
             System.out.println("Gracz " + aktualnyGracz + " zagrał kartę Róg dowódcy na rząd " + wyborRzedu);
-        }
-        else if (karta.getNazwa().equalsIgnoreCase("Manekin do ćwiczeń")) {
+        } else if (karta.getNazwa().equalsIgnoreCase("Manekin do ćwiczeń")) {
             System.out.println("Wybierz kartę, którą chcesz podmienić z Manekinem do ćwiczeń:");
 
             List<Karta> poleGry = (aktualnyGracz == 1) ?
@@ -230,8 +228,7 @@ public class Gra {
                 System.out.println("Niepoprawny wybór karty!");
                 reka.add(karta);
             }
-        }
-        else if (karta.getNazwa().equalsIgnoreCase("Pożoga")) {
+        } else if (karta.getNazwa().equalsIgnoreCase("Pożoga")) {
             System.out.println("Gracz " + aktualnyGracz + " używa karty Pożoga!");
 
             Karta najsilniejszaKarta = znajdzNajsilniejszaKarte();
@@ -247,14 +244,18 @@ public class Gra {
             } else {
                 System.out.println("Nie ma kart do zniszczenia!");
             }
-        }
-        else {
+        } else {
             List<Karta> wybranyRzad = znajdzRzad(karta);
             if (wybranyRzad != null) {
-                wybranyRzad.add(karta);
-                System.out.println("Gracz " + aktualnyGracz + " zagrał kartę " + karta.getNazwa());
-                if (karta.getUmiejetnosc().equals("Braterstwo")) {
-                    aktywujBraterstwo(karta, wybranyRzad);
+                if (karta.maUmiejetnosc("Szpiegostwo")) {
+                    // Dla Szpiega - wywołaj umiejętność, ale nie dodawaj karty do własnego rzędu
+                    aktywujUmiejetnosci(karta);
+                } else {
+                    wybranyRzad.add(karta);
+                    System.out.println("Gracz " + aktualnyGracz + " zagrał kartę " + karta.getNazwa());
+                    if (karta.getUmiejetnosc().equals("Braterstwo")) {
+                        aktywujBraterstwo(karta, wybranyRzad);
+                    }
                 }
             } else {
                 System.out.println("Błąd! Nie można zagrać tej karty.");
@@ -446,6 +447,7 @@ public class Gra {
                 (rekaGracz1.isEmpty() && gracz2Pasowal) ||
                 (rekaGracz2.isEmpty() && gracz1Pasowal);
     }
+
     private void aktywujUmiejetnosci(Karta karta) {
         // Aktywuj pierwszą umiejętność
         if (!karta.getUmiejetnosc().equalsIgnoreCase("Brak")) {
@@ -459,8 +461,61 @@ public class Gra {
     }
 
     private void aktywujUmiejetnosc(Karta karta, String umiejetnosc) {
-        switch(umiejetnosc.toLowerCase()) {
-
+        switch (umiejetnosc.toLowerCase()) {
+            case "szpiegostwo":
+                aktywujSzpiegostwo(karta);
+                break;
+            // ... inne przypadki umiejętności
         }
+    }
+
+    private void aktywujSzpiegostwo(Karta karta) {
+        // 1. Umieść kartę na planszy przeciwnika
+        int przeciwnik = (aktualnyGracz == 1) ? 2 : 1;
+        List<Karta> rzadPrzeciwnika = znajdzRzadDlaGracza(karta.getPozycja(), przeciwnik);
+        rzadPrzeciwnika.add(karta);
+
+        // 2. Gracz dobiera 2 losowe karty z talii (pomijając dowódców)
+        List<Karta> taliaGracza = (aktualnyGracz == 1) ? new ArrayList<>(taliaGracza1) : new ArrayList<>(taliaGracza2);
+        List<Karta> rekaGracza = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
+
+        // Filtrujemy talię - usuwamy dowódców
+        List<Karta> taliaBezDowodcow = taliaGracza.stream()
+                .filter(k -> !k.getTyp().equalsIgnoreCase("Dowódca"))
+                .collect(Collectors.toList());
+
+        Random random = new Random();
+        int dobraneKarty = 0;
+
+        while (!taliaBezDowodcow.isEmpty() && dobraneKarty < 2) {
+            // Losujemy kartę
+            int losowyIndex = random.nextInt(taliaBezDowodcow.size());
+            Karta dobranaKarta = taliaBezDowodcow.remove(losowyIndex);
+
+            // Dodajemy do ręki
+            rekaGracza.add(dobranaKarta);
+
+            // Usuwamy z talii (oryginalnej)
+            if (aktualnyGracz == 1) {
+                taliaGracza1.remove(dobranaKarta);
+            } else {
+                taliaGracza2.remove(dobranaKarta);
+            }
+
+            dobraneKarty++;
+            System.out.println("Dobrano kartę: " + dobranaKarta.getNazwa());
+        }
+
+        System.out.println("Gracz " + aktualnyGracz + " zagrał Szpiega! Karta trafia do przeciwnika, a gracz dobiera " + dobraneKarty + " karty.");
+    }
+    private List<Karta> znajdzRzadDlaGracza(String pozycja, int gracz) {
+        if (pozycja.equalsIgnoreCase("Bliskie starcie")) {
+            return (gracz == 1) ? rzadBliskiGracz1 : rzadBliskiGracz2;
+        } else if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) {
+            return (gracz == 1) ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
+        } else if (pozycja.equalsIgnoreCase("Oblężnicze")) {
+            return (gracz == 1) ? rzadDalszyGracz1 : rzadDalszyGracz2;
+        }
+        return null;
     }
 }

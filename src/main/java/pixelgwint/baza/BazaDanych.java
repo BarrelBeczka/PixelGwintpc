@@ -68,7 +68,9 @@ public class BazaDanych {
                         resultSet.getString("talia"),
                         resultSet.getInt("punkty_sily"),
                         resultSet.getString("umiejetnosc"),
+                        resultSet.getString("umiejetnosc_2"), // Nowa kolumna
                         resultSet.getString("pozycja"),
+                        resultSet.getString("pozycja_2"), // Nowa kolumna
                         resultSet.getString("grafika")
                 );
                 karty.add(karta);

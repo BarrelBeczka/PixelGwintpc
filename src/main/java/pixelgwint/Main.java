@@ -4,6 +4,7 @@ import java.util.*;
 import pixelgwint.baza.BazaDanych;
 import pixelgwint.logika.Gra;
 import pixelgwint.model.Karta;
+import pixelgwint.logika.PomocnikBraterstwa;
 
 public class Main {
     public static void main(String[] args) {
@@ -58,7 +59,7 @@ public class Main {
             rekaGracza1 = wymienKarty(rekaGracza1, talia1, scanner);
         }
 
-        Gra gra = new Gra(rekaGracza1, rekaGracza2, pierwszyGracz, dowodcaGracza1, dowodcaGracza2);
+        Gra gra = new Gra(rekaGracza1, rekaGracza2, pierwszyGracz, dowodcaGracza1, dowodcaGracza2, talia1, talia2);
         gra.rozpocznijGre();
     }
     public static int rzutMoneta() {
@@ -170,8 +171,21 @@ public class Main {
     }
 
     private static void wyswietlKarte(int indeks, Karta karta) {
-        String umiejetnosc = karta.getUmiejetnosc().equalsIgnoreCase("Brak") ? "" : " (Umiejętność: " + karta.getUmiejetnosc() + ")";
-        System.out.println((indeks + 1) + ". " + karta.getNazwa() + " | Siła: " + karta.getSila() + " | Pozycja: " + karta.getPozycja() + umiejetnosc);
+        String umiejetnosc = karta.getUmiejetnosc().equalsIgnoreCase("Brak") ? "" : " (Umiejętność: " + karta.getUmiejetnosc();
+        if (!karta.getUmiejetnosc_2().equalsIgnoreCase("Brak")) {
+            umiejetnosc += ", " + karta.getUmiejetnosc_2();
+        }
+        umiejetnosc += ")";
+
+        String pozycja = karta.getPozycja();
+        if (!karta.getPozycja_2().equalsIgnoreCase("Brak")) {
+            pozycja += "/" + karta.getPozycja_2();
+        }
+
+        System.out.println((indeks + 1) + ". " + karta.getNazwa() +
+                " | Siła: " + karta.getSila() +
+                " | Pozycja: " + pozycja +
+                umiejetnosc);
     }
 
     public static void wyswietlTalie(List<Karta> talia, Map<Karta, Integer> oryginalneNumery) {

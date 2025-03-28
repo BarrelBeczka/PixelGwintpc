@@ -29,13 +29,47 @@ public class Gra {
     private boolean gracz1Pasowal = false;
     private boolean gracz2Pasowal = false;
 
-    public Gra(List<Karta> reka1, List<Karta> reka2, int pierwszyGracz, Karta dowodcaGracz1, Karta dowodcaGracz2) {
+    private List<Karta> taliaGracza1;
+    private List<Karta> taliaGracza2;
+
+    public Gra(List<Karta> reka1, List<Karta> reka2, int pierwszyGracz, Karta dowodcaGracz1, Karta dowodcaGracz2, List<Karta> talia1, List<Karta> talia2) {
         this.rekaGracz1 = new ArrayList<>(reka1);
         this.rekaGracz2 = new ArrayList<>(reka2);
         this.aktualnyGracz = pierwszyGracz + 1;
         this.dowodcaGracz1 = dowodcaGracz1;
         this.dowodcaGracz2 = dowodcaGracz2;
+        this.taliaGracza1 = new ArrayList<>(talia1);
+        this.taliaGracza2 = new ArrayList<>(talia2);
     }
+    private void aktywujBraterstwo(Karta zagranaKarta, List<Karta> rzadZagrania) {
+        // Pobierz pełną talię gracza (bez dowódcy)
+        List<Karta> taliaGracza = (aktualnyGracz == 1) ? taliaGracza1 : taliaGracza2;
+
+        // Znajdź wszystkie pasujące karty
+        List<Karta> kartyBraterstwa = PomocnikBraterstwa.znajdzKartyBraterstwa(zagranaKarta, taliaGracza);
+
+        if (!kartyBraterstwa.isEmpty()) {
+            System.out.println("Aktywacja Braterstwa dla karty " + zagranaKarta.getNazwa() + ":");
+
+            for (Karta karta : kartyBraterstwa) {
+                // Znajdź odpowiedni rząd dla przywoływanej karty
+                List<Karta> odpowiedniRzad = znajdzRzadDlaPozycji(karta.getPozycja());
+
+                System.out.println(" - Przywołano kartę: " + karta.getNazwa() + " do rzędu: " + karta.getPozycja());
+                odpowiedniRzad.add(karta);
+
+                // Usuń z ręki lub talii
+                if (aktualnyGracz == 1) {
+                    rekaGracz1.remove(karta);
+                    taliaGracza1.remove(karta);
+                } else {
+                    rekaGracz2.remove(karta);
+                    taliaGracza2.remove(karta);
+                }
+            }
+        }
+    }
+
 
     public void rozpocznijGre() {
         Scanner scanner = new Scanner(System.in);
@@ -219,6 +253,9 @@ public class Gra {
             if (wybranyRzad != null) {
                 wybranyRzad.add(karta);
                 System.out.println("Gracz " + aktualnyGracz + " zagrał kartę " + karta.getNazwa());
+                if (karta.getUmiejetnosc().equals("Braterstwo")) {
+                    aktywujBraterstwo(karta, wybranyRzad);
+                }
             } else {
                 System.out.println("Błąd! Nie można zagrać tej karty.");
                 reka.add(karta);
@@ -227,6 +264,7 @@ public class Gra {
 
         nastepnaTura();
     }
+
 
     private Karta znajdzNajsilniejszaKarte() {
         Karta najsilniejszaKarta = null;
@@ -286,11 +324,31 @@ public class Gra {
     }
 
     private List<Karta> znajdzRzad(Karta karta) {
-        if (karta.getPozycja().equalsIgnoreCase("Bliskie starcie")) {
+        // Tylko karty ze Zręcznością mają wybór pozycji
+        if (karta.maUmiejetnosc("Zręczność") &&
+                karta.getPozycja_2() != null &&
+                !karta.getPozycja_2().equalsIgnoreCase("N/D")) {
+
+            System.out.println("Wybierz pozycję dla karty " + karta.getNazwa() + ":");
+            System.out.println("1. " + karta.getPozycja());
+            System.out.println("2. " + karta.getPozycja_2());
+
+            Scanner scanner = new Scanner(System.in);
+            int wybor = scanner.nextInt();
+
+            if (wybor == 2) {
+                return znajdzRzadDlaPozycji(karta.getPozycja_2());
+            }
+        }
+        return znajdzRzadDlaPozycji(karta.getPozycja());
+    }
+
+    private List<Karta> znajdzRzadDlaPozycji(String pozycja) {
+        if (pozycja.equalsIgnoreCase("Bliskie starcie")) {
             return (aktualnyGracz == 1) ? rzadBliskiGracz1 : rzadBliskiGracz2;
-        } else if (karta.getPozycja().equalsIgnoreCase("Jednostki strzeleckie")) {
+        } else if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) {
             return (aktualnyGracz == 1) ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
-        } else if (karta.getPozycja().equalsIgnoreCase("Oblężnicze")) {
+        } else if (pozycja.equalsIgnoreCase("Oblężnicze")) {
             return (aktualnyGracz == 1) ? rzadDalszyGracz1 : rzadDalszyGracz2;
         }
         return null;
@@ -303,12 +361,13 @@ public class Gra {
     public void wyswietlPlansze() {
         System.out.println("\nPLANSZA");
 
-        // Sekcja Gracza 1
         System.out.println("Żetony życia Gracza 1: (" + zetonyZyciaGracz1 + "/2)");
         System.out.println("Dowódca Gracza 1: " + (dowodcaGracz1 != null ? dowodcaGracz1.getNazwa() : "Brak"));
-        System.out.println("\nCmentarz Gracza 1: " + wyswietlKarty(cmentarzGracz1));
 
-        wyswietlRzad("Machiny oblężnicze", rzadDalszyGracz1);
+        System.out.println("\nCmentarz Gracza 1: " + wyswietlKarty(cmentarzGracz1));
+        System.out.println("Karty w talii Gracza 1: " + taliaGracza1.size());
+
+        wyswietlRzad("\nMachiny oblężnicze", rzadDalszyGracz1);
         wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz1);
         wyswietlRzad("Bliskie starcie", rzadBliskiGracz1);
         System.out.println("----------------------------------------");
@@ -318,7 +377,9 @@ public class Gra {
         wyswietlRzad("Bliskie starcie", rzadBliskiGracz2);
         wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz2);
         wyswietlRzad("Machiny oblężnicze", rzadDalszyGracz2);
-        System.out.println("Cmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
+
+        System.out.println("\nCmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
+        System.out.println("Karty w talii Gracza 2: " + taliaGracza2.size());
 
         System.out.println("\nDowódca Gracza 2: " + (dowodcaGracz2 != null ? dowodcaGracz2.getNazwa() : "Brak"));
         System.out.println("Żetony życia Gracza 2: (" + zetonyZyciaGracz2 + "/2)");
@@ -384,5 +445,22 @@ public class Gra {
                 (rekaGracz1.isEmpty() && rekaGracz2.isEmpty()) ||
                 (rekaGracz1.isEmpty() && gracz2Pasowal) ||
                 (rekaGracz2.isEmpty() && gracz1Pasowal);
+    }
+    private void aktywujUmiejetnosci(Karta karta) {
+        // Aktywuj pierwszą umiejętność
+        if (!karta.getUmiejetnosc().equalsIgnoreCase("Brak")) {
+            aktywujUmiejetnosc(karta, karta.getUmiejetnosc());
+        }
+
+        // Aktywuj drugą umiejętność jeśli istnieje
+        if (karta.getUmiejetnosc_2() != null && !karta.getUmiejetnosc_2().equalsIgnoreCase("Brak")) {
+            aktywujUmiejetnosc(karta, karta.getUmiejetnosc_2());
+        }
+    }
+
+    private void aktywujUmiejetnosc(Karta karta, String umiejetnosc) {
+        switch(umiejetnosc.toLowerCase()) {
+
+        }
     }
 }

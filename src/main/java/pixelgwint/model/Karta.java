@@ -95,6 +95,18 @@ public class Karta {
     public String getGrafika() {
         return grafika;
     }
+    public void setPozycja(String pozycja) {
+        this.pozycja = pozycja;
+    }
+    private boolean czyZachowana = false;
+
+    public boolean isCzyZachowana() {
+        return czyZachowana;
+    }
+
+    public void setCzyZachowana(boolean czyZachowana) {
+        this.czyZachowana = czyZachowana;
+    }
 
     @Override
     public String toString() {
@@ -108,5 +120,8 @@ public class Karta {
                 ", pozycja='" + pozycja + '\'' +
                 ", grafika='" + grafika + '\'' +
                 '}';
+    }
+    public void setSila(int sila) {
+        this.sila = sila;
     }
 }

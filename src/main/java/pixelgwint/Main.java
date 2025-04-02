@@ -7,6 +7,17 @@ import pixelgwint.model.Karta;
 import pixelgwint.logika.PomocnikBraterstwa;
 
 public class Main {
+    private static String przypiszUmiejetnoscTalii(String nazwaTalii) {
+        if (nazwaTalii == null || nazwaTalii.isEmpty()) return "";
+
+        String normalized = nazwaTalii.trim().toLowerCase();
+
+        if (normalized.contains("scoia'tael") || normalized.contains("scoia tael") ||
+                 normalized.contains("scoiatael")) {
+            return "Scoia'tael";
+        }
+        return "";
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -24,10 +35,36 @@ public class Main {
         System.out.print("Gracz 1, wybierz talię (podaj numer): ");
         int wybor1 = scanner.nextInt();
         String taliaGracza1 = talie.get(wybor1 - 1);
+        scanner.nextLine(); // Czyść bufor
 
         System.out.print("Gracz 2, wybierz talię (podaj numer): ");
         int wybor2 = scanner.nextInt();
         String taliaGracza2 = talie.get(wybor2 - 1);
+        scanner.nextLine(); // Czyść bufor
+
+        int pierwszyGracz; // TYLKO JEDNA DEKLARACJA - NIE ZMIENIAJ TEGO
+        String umiejetnosc1 = przypiszUmiejetnoscTalii(taliaGracza1);
+        String umiejetnosc2 = przypiszUmiejetnoscTalii(taliaGracza2);
+
+        if ("Scoia'tael".equals(umiejetnosc1) && !"Scoia'tael".equals(umiejetnosc2)) {
+            System.out.println("\nGracz 1 wybrał Scoia'tael - wybiera kto zaczyna:");
+            System.out.println("1. Ja (Gracz 1)");
+            System.out.println("2. Przeciwnik (Gracz 2)");
+            int wybor = scanner.nextInt();
+            pierwszyGracz = (wybor == 1) ? 0 : 1;
+            scanner.nextLine(); // Czyść bufor
+        }
+        else if ("Scoia'tael".equals(umiejetnosc2) && !"Scoia'tael".equals(umiejetnosc1)) {
+            System.out.println("\nGracz 2 wybrał Scoia'tael - wybiera kto zaczyna:");
+            System.out.println("1. Ja (Gracz 2)");
+            System.out.println("2. Przeciwnik (Gracz 1)");
+            int wybor = scanner.nextInt();
+            pierwszyGracz = (wybor == 1) ? 1 : 0;
+            scanner.nextLine(); // Czyść bufor
+        }
+        else {
+            pierwszyGracz = rzutMoneta();
+        }
 
         System.out.println("Gracz 1 wybiera karty:");
         List<Karta> talia1 = wybierzKarty(BazaDanych.pobierzKartyZTalii(taliaGracza1));
@@ -37,7 +74,6 @@ public class Main {
         List<Karta> talia2 = wybierzKarty(BazaDanych.pobierzKartyZTalii(taliaGracza2));
         dowodcaGracza2 = znajdzDowodce(talia2);  // Znajdź dowódcę w talii Gracza 2
 
-        int pierwszyGracz = rzutMoneta();
 
         List<Karta> rekaGracza1 = wylosujKartyDoGry(talia1, 10);
         List<Karta> rekaGracza2 = wylosujKartyDoGry(talia2, 10);
@@ -59,7 +95,10 @@ public class Main {
             rekaGracza1 = wymienKarty(rekaGracza1, talia1, scanner);
         }
 
-        Gra gra = new Gra(rekaGracza1, rekaGracza2, pierwszyGracz, dowodcaGracza1, dowodcaGracza2, talia1, talia2);
+        Gra gra = new Gra(rekaGracza1, rekaGracza2, pierwszyGracz,
+                dowodcaGracza1, dowodcaGracza2,
+                talia1, talia2,
+                taliaGracza1, taliaGracza2);
         gra.rozpocznijGre();
     }
     public static int rzutMoneta() {

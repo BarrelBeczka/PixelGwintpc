@@ -39,6 +39,57 @@ public class Gra {
     private final String umiejetnoscTaliiGracza1;
     private final String umiejetnoscTaliiGracza2;
 
+    private boolean dowodcaAktywowanyGracz1 = false;
+    private boolean dowodcaAktywowanyGracz2 = false;
+
+    private Map<String, Integer> efektyDowodcowGracz1 = new HashMap<>();
+    private Map<String, Integer> efektyDowodcowGracz2 = new HashMap<>();
+    private boolean dowodcaUzytyGracz1 = false;
+    private boolean dowodcaUzytyGracz2 = false;
+
+    private boolean emhyrNajeźdźcaAktywny = false;
+    private boolean emhyrBiałyPłomieńAktywny = false;
+
+
+    private String sprawdzDowodce(int gracz) {
+        Karta dowodca = (gracz == 1) ? dowodcaGracz1 : dowodcaGracz2;
+        if (dowodca == null) return "";
+
+        String nazwa = dowodca.getNazwa();
+
+        // Foltesty (Królestwo Północy)
+        if (nazwa.contains("Foltest")) {
+            if (nazwa.contains("Zdobywca")) return "Zdobywca";
+            if (nazwa.contains("Dowódca Północy")) return "Dowódca_Północy";
+            if (nazwa.contains("Król Temerii")) return "Król_Temerii";
+            if (nazwa.contains("Syn Medella")) return "Syn_Medella";
+            if (nazwa.contains("Żelazny Władca")) return "Żelazny_Władca";
+        }
+        // Emhyry (Nilfgaard)
+        else if (nazwa.contains("Emhyr")) {
+            if (nazwa.contains("Pan południa")) return "Pan_południa";
+            if (nazwa.contains("Cesarz Nilfgaardu")) return "Cesarz_Nilfgaardu";
+            if (nazwa.contains("Jeż z Erlenwaldu")) return "Jeż_z_Erlenwaldu";
+            if (nazwa.contains("Najeźdźca Północy")) return "Najeźdźca_Północy";
+            if (nazwa.contains("Biały Płomień")) return "Biały_Płomień";
+        }
+        else if (nazwa.contains("Francesca")) {
+            if (nazwa.contains("Elfka czystej krwi")) return "Elfka_czystej_krwi";
+            if (nazwa.contains("Stokrotka z Dolin")) return "Stokrotka_z_Dolin";
+            if (nazwa.contains("Nadzieja Dol Blathanna")) return "Nadzieje_Dol_Blathanna";
+            if (nazwa.contains("Królowa Dol Blathanna")) return "Krolowa_Dol_Blathanna";
+            if (nazwa.contains("Najpiękniejsza kobieta na świecie")) return "Najpiekniejsza_kobieta";
+        }
+        else if (nazwa.contains("Eredin")) {
+            if (nazwa.contains("Dowódca Czerwonych Jeźdźców")) return "Dowódca_Czerwonych_Jeźdźców";
+            if (nazwa.contains("Zdradziecki")) return "Zdradziecki";
+            if (nazwa.contains("Władca Tir Ná Lia")) return "Władca_Tir_Ná_Lia";
+            if (nazwa.contains("Zabójca Auberona")) return "Zabójca_Auberona";
+            if (nazwa.contains("Król Dzikiego Gonu")) return "Król_Dzikiego_Gonu";
+        }
+        return "";
+    }
+
 
     public Gra(List<Karta> reka1, List<Karta> reka2, int pierwszyGracz,
                Karta dowodcaGracz1, Karta dowodcaGracz2,
@@ -57,6 +108,44 @@ public class Gra {
         this.umiejetnoscTaliiGracza2 = przypiszUmiejetnoscTalii(nazwaTalii2);
         System.out.println("Gracz 1 talia: " + nazwaTalii1 + " -> umiejętność: " + umiejetnoscTaliiGracza1);
         System.out.println("Gracz 2 talia: " + nazwaTalii2 + " -> umiejętność: " + umiejetnoscTaliiGracza2);
+        if (dowodcaGracz1 != null) {
+            if (dowodcaGracz1.getNazwa().contains("Biały Płomień")) {
+                emhyrBiałyPłomieńAktywny = true;
+                System.out.println("Gracz 1: Aktywowano pasywną umiejętność - Biały Płomień blokuje dowódcę przeciwnika!");
+            }
+            if (dowodcaGracz1.getNazwa().contains("Najeźdźca Północy")) {
+                emhyrNajeźdźcaAktywny = true;
+                System.out.println("Gracz 1: Aktywowano pasywną umiejętność - Najeźdźca Północy (losowe wskrzeszanie)!");
+            }
+        }
+
+        if (dowodcaGracz2 != null) {
+            if (dowodcaGracz2.getNazwa().contains("Biały Płomień")) {
+                emhyrBiałyPłomieńAktywny = true;
+                System.out.println("Gracz 2: Aktywowano pasywną umiejętność - Biały Płomień blokuje dowódcę przeciwnika!");
+            }
+            if (dowodcaGracz2.getNazwa().contains("Najeźdźca Północy")) {
+                emhyrNajeźdźcaAktywny = true;
+                System.out.println("Gracz 2: Aktywowano pasywną umiejętność - Najeźdźca Północy (losowe wskrzeszanie)!");
+            }
+        }
+        if (dowodcaGracz1 != null) {
+            if (dowodcaGracz1.getNazwa().contains("Stokrotka z Dolin")) {
+                System.out.println("Gracz 1: Aktywowano pasywną umiejętność - Stokrotka z Dolin (rozpoczyna z 11 kartami)!");
+            }
+        }
+        if (dowodcaGracz2 != null) {
+            if (dowodcaGracz2.getNazwa().contains("Stokrotka z Dolin")) {
+                System.out.println("Gracz 2: Aktywowano pasywną umiejętność - Stokrotka z Dolin (rozpoczyna z 11 kartami)!");
+            }
+        }
+        if (dowodcaGracz1 != null && dowodcaGracz1.getNazwa().contains("Zdradziecki")) {
+            System.out.println("Gracz 1: Aktywowano pasywną umiejętność - siła szpiegów podwojona!");
+        }
+        if (dowodcaGracz2 != null && dowodcaGracz2.getNazwa().contains("Zdradziecki")) {
+            System.out.println("Gracz 2: Aktywowano pasywną umiejętność - siła szpiegów podwojona!");
+        }
+
     }
     private String przypiszUmiejetnoscTalii(String nazwaTalii) {
         if (nazwaTalii == null || nazwaTalii.isEmpty()) return "";
@@ -122,6 +211,7 @@ public class Gra {
     private void aktywujBraterstwo(Karta zagranaKarta, List<Karta> rzadZagrania) {
         // Pobierz pełną talię gracza (bez dowódcy)
         List<Karta> taliaGracza = (aktualnyGracz == 1) ? taliaGracza1 : taliaGracza2;
+        List<Karta> rekaGracza = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
 
         // Znajdź wszystkie pasujące karty
         List<Karta> kartyBraterstwa = PomocnikBraterstwa.znajdzKartyBraterstwa(zagranaKarta, taliaGracza);
@@ -131,24 +221,22 @@ public class Gra {
 
             for (Karta karta : kartyBraterstwa) {
                 // Znajdź odpowiedni rząd dla przywoływanej karty
-                List<Karta> odpowiedniRzad = znajdzRzadDlaPozycji(karta.getPozycja());
+                List<Karta> odpowiedniRzad = znajdzRzadDlaGracza(karta.getPozycja(), aktualnyGracz);
 
-                System.out.println(" - Przywołano kartę: " + karta.getNazwa() + " do rzędu: " + karta.getPozycja());
+                // Dodaj kartę do odpowiedniego rzędu
                 odpowiedniRzad.add(karta);
+                System.out.println(" - Przywołano kartę: " + karta.getNazwa() + " do rzędu: " + karta.getPozycja());
 
                 // Usuń z ręki lub talii
+                rekaGracza.remove(karta);
                 if (aktualnyGracz == 1) {
-                    rekaGracz1.remove(karta);
                     taliaGracza1.remove(karta);
                 } else {
-                    rekaGracz2.remove(karta);
                     taliaGracza2.remove(karta);
                 }
             }
         }
     }
-
-
     public void rozpocznijGre() {
         Scanner scanner = new Scanner(System.in);
 
@@ -181,6 +269,10 @@ public class Gra {
                         break;
                     }
                     nastepnaTura();
+                    continue;
+                }
+                if (wybor.equalsIgnoreCase("dowódca")) {
+                    aktywujDowodce(aktualnyGracz);
                     continue;
                 }
 
@@ -336,14 +428,13 @@ public class Gra {
                     karta.getSila(),
                     karta.getUmiejetnosc(),
                     karta.getUmiejetnosc_2(),
-                    wybranaPozycja,  // Ustaw nową pozycję
+                    wybranaPozycja,
                     karta.getPozycja_2(),
                     karta.getGrafika()
             );
 
-            // Dodaj do wybranego rzędu
-            List<Karta> wybranyRzad = znajdzRzadDlaGracza(wybranaPozycja, aktualnyGracz);
-            wybranyRzad.add(kartaRogu);
+            // Dodaj do wybranego rzędu używając nowej metody
+            dodajKarteDoRzedu(kartaRogu, wybranaPozycja, aktualnyGracz);
 
             // Aktywuj umiejętność
             aktywujUmiejetnosci(kartaRogu);
@@ -371,7 +462,10 @@ public class Gra {
             if (wyborKarty >= 0 && wyborKarty < poleGry.size()) {
                 Karta kartaDoPodmiany = poleGry.get(wyborKarty);
                 usunKarteZRzedu(kartaDoPodmiany);
-                dodajKarteDoRzedu(karta, kartaDoPodmiany);
+
+                // Użyj nowej metody do dodania karty
+                dodajKarteDoRzedu(karta, kartaDoPodmiany.getPozycja(), aktualnyGracz);
+
                 reka.add(kartaDoPodmiany);
                 System.out.println("Podmieniono kartę " + kartaDoPodmiany.getNazwa() + " z Manekinem do ćwiczeń.");
             } else {
@@ -401,7 +495,7 @@ public class Gra {
         else if (karta.getNazwa().equalsIgnoreCase("Jaskier")) {
             List<Karta> wybranyRzad = znajdzRzad(karta);
             if (wybranyRzad != null) {
-                wybranyRzad.add(karta);
+                dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
                 // Aktywuj efekt rogu dowódcy
                 aktywujRogDowodcy(karta);
             }
@@ -410,12 +504,12 @@ public class Gra {
             // Najpierw dodaj kartę do odpowiedniego rzędu
             List<Karta> wybranyRzad = znajdzRzad(karta);
             if (wybranyRzad != null) {
-                wybranyRzad.add(karta);
+                dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
                 // Następnie aktywuj umiejętność
                 aktywujUmiejetnosci(karta);
             } else {
                 System.out.println("Błąd! Nie można zagrać tej karty.");
-                reka.add(karta); // Zwróć kartę do ręki
+                reka.add(karta);
             }
         }
         else {
@@ -430,16 +524,16 @@ public class Gra {
                     aktywujUmiejetnosci(karta);
                 }
                 else if (karta.maUmiejetnosc("Więź")) {
-                    wybranyRzad.add(karta); // Najpierw dodaj do rzędu
-                    aktywujUmiejetnosci(karta); // Potem aktywuj więź
+                    dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
+                    aktywujUmiejetnosci(karta);
                 }
                 else if (karta.maUmiejetnosc("Wysokie morale")) {
-                    wybranyRzad.add(karta);
+                    dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
                     aktywujUmiejetnosci(karta);
                 }
                 else {
                     // Standardowe zagranie karty
-                    wybranyRzad.add(karta);
+                    dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
                     System.out.println("Gracz " + aktualnyGracz + " zagrał kartę " + karta.getNazwa());
                     if (karta.getUmiejetnosc().equals("Braterstwo")) {
                         aktywujBraterstwo(karta, wybranyRzad);
@@ -549,16 +643,31 @@ public class Gra {
                 karta.getPozycja() + " straciły 1 punkt siły.");
     }
 
-    private void dodajKarteDoRzedu(Karta karta, Karta kartaWzor) {
-        if (rzadBliskiGracz1.contains(kartaWzor)) rzadBliskiGracz1.add(karta);
-        else if (rzadSrodkowyGracz1.contains(kartaWzor)) rzadSrodkowyGracz1.add(karta);
-        else if (rzadDalszyGracz1.contains(kartaWzor)) rzadDalszyGracz1.add(karta);
-        else if (rzadBliskiGracz2.contains(kartaWzor)) rzadBliskiGracz2.add(karta);
-        else if (rzadSrodkowyGracz2.contains(kartaWzor)) rzadSrodkowyGracz2.add(karta);
-        else if (rzadDalszyGracz2.contains(kartaWzor)) rzadDalszyGracz2.add(karta);
+    private void dodajKarteDoRzedu(Karta karta, String pozycja, int gracz) {
+        List<Karta> rzad = znajdzRzadDlaGracza(pozycja, gracz);
+        rzad.add(karta);
+
+        // Sprawdzamy efekty dowódców
+        Map<String, Integer> efekty = gracz == 1 ? efektyDowodcowGracz1 : efektyDowodcowGracz2;
+
+        if (efekty.containsKey("Zdobywca") && pozycja.equalsIgnoreCase("Oblężnicze")) {
+            // Sprawdź czy jest już róg dowódcy w rzędzie (pomijając aktualną kartę)
+            boolean jestRog = rzad.stream()
+                    .anyMatch(k -> (k.maUmiejetnosc("Róg dowódcy") ||
+                            k.getNazwa().equalsIgnoreCase("Jaskier")) &&
+                            k != karta);
+
+            if (!jestRog && karta.getTyp().equalsIgnoreCase("Jednostka")) {
+                int bazowaSila = znajdzBazowaSile(karta);
+                karta.setSila(bazowaSila * efekty.get("Zdobywca"));
+                System.out.println("Efekt Foltesta Zdobywcy: Siła karty " + karta.getNazwa() +
+                        " została pomnożona przez " + efekty.get("Zdobywca"));
+            }
+        }
     }
 
     private int obliczRzeczywistaSile(Karta karta) {
+        // Efekty pogodowe
         for (Karta pogoda : kartyPogodowe) {
             if (pogoda.getNazwa().equalsIgnoreCase("Ulewny deszcz") &&
                     karta.getPozycja().equalsIgnoreCase("Oblężnicze") &&
@@ -576,14 +685,57 @@ public class Gra {
                 return 1;
             }
         }
-        return karta.getSila();
+
+        int sila = karta.getSila();
+
+        // Efekt rogu dowódcy/Jaskra
+        if (karta.getTyp().equalsIgnoreCase("Jednostka")) {
+            List<Karta> rzad = znajdzRzadDlaPozycji(karta.getPozycja(), karta);
+            boolean jestRog = rzad.stream()
+                    .anyMatch(k -> (k.maUmiejetnosc("Róg dowódcy") ||
+                            k.getNazwa().equalsIgnoreCase("Jaskier")) &&
+                            !k.equals(karta));
+
+            if (jestRog) {
+                sila *= 2;
+            }
+        }
+        if ((dowodcaGracz1 != null && dowodcaGracz1.getNazwa().contains("Zdradziecki") &&
+                (rzadBliskiGracz1.contains(karta) || rzadSrodkowyGracz1.contains(karta) || rzadDalszyGracz1.contains(karta))) ||
+                (dowodcaGracz2 != null && dowodcaGracz2.getNazwa().contains("Zdradziecki") &&
+                        (rzadBliskiGracz2.contains(karta) || rzadSrodkowyGracz2.contains(karta) || rzadDalszyGracz2.contains(karta)))) {
+            if (karta.maUmiejetnosc("Szpiegostwo")) {
+                sila *= 2;
+            }
+        }
+
+        return sila;
     }
 
+
+    private List<Karta> znajdzRzadDlaPozycji(String pozycja, Karta karta) {
+        if (rzadBliskiGracz1.contains(karta) || rzadSrodkowyGracz1.contains(karta) || rzadDalszyGracz1.contains(karta)) {
+            if (pozycja.equalsIgnoreCase("Bliskie starcie")) return rzadBliskiGracz1;
+            if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) return rzadSrodkowyGracz1;
+            if (pozycja.equalsIgnoreCase("Oblężnicze")) return rzadDalszyGracz1;
+        }
+        else if (rzadBliskiGracz2.contains(karta) || rzadSrodkowyGracz2.contains(karta) || rzadDalszyGracz2.contains(karta)) {
+            if (pozycja.equalsIgnoreCase("Bliskie starcie")) return rzadBliskiGracz2;
+            if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) return rzadSrodkowyGracz2;
+            if (pozycja.equalsIgnoreCase("Oblężnicze")) return rzadDalszyGracz2;
+        }
+        else {
+            if (pozycja.equalsIgnoreCase("Bliskie starcie")) return aktualnyGracz == 1 ? rzadBliskiGracz1 : rzadBliskiGracz2;
+            if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) return aktualnyGracz == 1 ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
+            if (pozycja.equalsIgnoreCase("Oblężnicze")) return aktualnyGracz == 1 ? rzadDalszyGracz1 : rzadDalszyGracz2;
+        }
+        return new ArrayList<>();
+    }
     private List<Karta> znajdzRzad(Karta karta) {
         // Tylko karty ze Zręcznością mają wybór pozycji
         if (karta.maUmiejetnosc("Zręczność") &&
                 karta.getPozycja_2() != null &&
-                !karta.getPozycja_2().equalsIgnoreCase("N/D")) {
+                !karta.getPozycja_2().equalsIgnoreCase("Brak")) {
 
             System.out.println("Wybierz pozycję dla karty " + karta.getNazwa() + ":");
             System.out.println("1. " + karta.getPozycja());
@@ -591,8 +743,11 @@ public class Gra {
 
             Scanner scanner = new Scanner(System.in);
             int wybor = scanner.nextInt();
+            scanner.nextLine(); // Czyść bufer
 
             if (wybor == 2) {
+                // Aktualizujemy pozycję karty przed dodaniem do rzędu
+                karta.setPozycja(karta.getPozycja_2());
                 return znajdzRzadDlaPozycji(karta.getPozycja_2());
             }
         }
@@ -601,15 +756,14 @@ public class Gra {
 
     private List<Karta> znajdzRzadDlaPozycji(String pozycja) {
         if (pozycja.equalsIgnoreCase("Bliskie starcie")) {
-            return (aktualnyGracz == 1) ? rzadBliskiGracz1 : rzadBliskiGracz2;
+            return new ArrayList<>(rzadBliskiGracz1);
         } else if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) {
-            return (aktualnyGracz == 1) ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
+            return new ArrayList<>(rzadSrodkowyGracz1);
         } else if (pozycja.equalsIgnoreCase("Oblężnicze")) {
-            return (aktualnyGracz == 1) ? rzadDalszyGracz1 : rzadDalszyGracz2;
+            return new ArrayList<>(rzadDalszyGracz1);
         }
-        return null;
+        return new ArrayList<>();
     }
-
     private void nastepnaTura() {
         aktualnyGracz = (aktualnyGracz == 1) ? 2 : 1;
     }
@@ -617,36 +771,657 @@ public class Gra {
     public void wyswietlPlansze() {
         System.out.println("\nPLANSZA");
 
+        // Wyświetlanie informacji o graczu 1
         System.out.println("Żetony życia Gracza 1: (" + zetonyZyciaGracz1 + "/2)");
-        System.out.println("Dowódca Gracza 1: " + (dowodcaGracz1 != null ? dowodcaGracz1.getNazwa() : "Brak"));
+        if (dowodcaGracz1 != null) {
+            String statusDowodcy1 = dowodcaUzytyGracz1 ? " (wykorzystany)" : " (dostępny)";
+            System.out.println("Dowódca Gracza 1: " + dowodcaGracz1.getNazwa() + statusDowodcy1);
 
+            // Dodatkowa informacja o pasywnych umiejętnościach
+            if (dowodcaGracz1.getNazwa().contains("Biały Płomień")) {
+                System.out.println("  [Pasywna umiejętność: Blokada dowódcy przeciwnika]");
+            }
+            if (dowodcaGracz1.getNazwa().contains("Najeźdźca Północy") && emhyrNajeźdźcaAktywny) {
+                System.out.println("  [Pasywna umiejętność: Wskrzeszanie losowe]");
+            }
+        } else {
+            System.out.println("Dowódca Gracza 1: Brak");
+        }
+
+        // Wyświetlanie cmentarza i talii gracza 1
         System.out.println("\nCmentarz Gracza 1: " + wyswietlKarty(cmentarzGracz1));
         System.out.println("Karty w talii Gracza 1: " + taliaGracza1.size());
 
+        // Wyświetlanie rzędów gracza 1
         wyswietlRzad("\nMachiny oblężnicze", rzadDalszyGracz1);
         wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz1);
         wyswietlRzad("Bliskie starcie", rzadBliskiGracz1);
+
         System.out.println("----------------------------------------");
         System.out.println("Karty pogodowe: " + wyswietlKarty(kartyPogodowe));
         System.out.println("----------------------------------------");
 
+        // Wyświetlanie rzędów gracza 2
         wyswietlRzad("Bliskie starcie", rzadBliskiGracz2);
         wyswietlRzad("Jednostki strzeleckie", rzadSrodkowyGracz2);
         wyswietlRzad("Machiny oblężnicze", rzadDalszyGracz2);
 
-        System.out.println("\nCmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
+        // Wyświetlanie informacji o graczu 2
+        System.out.println("\nŻetony życia Gracza 2: (" + zetonyZyciaGracz2 + "/2)");
+        System.out.println("Cmentarz Gracza 2: " + wyswietlKarty(cmentarzGracz2));
         System.out.println("Karty w talii Gracza 2: " + taliaGracza2.size());
 
-        System.out.println("\nDowódca Gracza 2: " + (dowodcaGracz2 != null ? dowodcaGracz2.getNazwa() : "Brak"));
-        System.out.println("Żetony życia Gracza 2: (" + zetonyZyciaGracz2 + "/2)");
+        if (dowodcaGracz2 != null) {
+            String statusDowodcy2 = dowodcaUzytyGracz2 ? " (wykorzystany)" : " (dostępny)";
+            System.out.println("Dowódca Gracza 2: " + dowodcaGracz2.getNazwa() + statusDowodcy2);
 
-        // Ręka aktualnego gracza
+            if (dowodcaGracz2.getNazwa().contains("Biały Płomień")) {
+                System.out.println("  [Pasywna umiejętność: Blokada dowódcy przeciwnika]");
+            }
+            if (dowodcaGracz2.getNazwa().contains("Najeźdźca Północy") && emhyrNajeźdźcaAktywny) {
+                System.out.println("  [Pasywna umiejętność: Wskrzeszanie losowe]");
+            }
+        } else {
+            System.out.println("Dowódca Gracza 2: Brak");
+        }
+
+        // Wyświetlanie ręki aktualnego gracza
         System.out.println("\nRęka Gracza " + aktualnyGracz + ":");
         List<Karta> reka = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
         for (int i = 0; i < reka.size(); i++) {
             Karta karta = reka.get(i);
-            String umiejetnosc = karta.getUmiejetnosc().equalsIgnoreCase("Brak") ? "" : " (Umiejętność: " + karta.getUmiejetnosc() + ")";
-            System.out.println((i + 1) + ". " + karta.getNazwa() + " | Siła: " + karta.getSila() + " | Pozycja: " + karta.getPozycja() + umiejetnosc);
+            String umiejetnosc = karta.getUmiejetnosc().equalsIgnoreCase("Brak") ? "" :
+                    " (Umiejętność: " + karta.getUmiejetnosc() + ")";
+            System.out.println((i + 1) + ". " + karta.getNazwa() +
+                    " | Siła: " + karta.getSila() +
+                    " | Pozycja: " + karta.getPozycja() +
+                    umiejetnosc);
+        }
+    }    private void aktywujDowodce(int gracz) {
+        // Sprawdzenie czy przeciwnik ma aktywnego Emhyra "Biały Płomień"
+        int przeciwnik = gracz == 1 ? 2 : 1;
+        Karta przeciwnikDowodca = przeciwnik == 1 ? dowodcaGracz1 : dowodcaGracz2;
+
+        // Sprawdzenie pasywnej umiejętności Biały Płomień
+        if (przeciwnikDowodca != null && przeciwnikDowodca.getNazwa().contains("Biały Płomień")) {
+            System.out.println("Umiejętność dowódcy zablokowana przez pasywną umiejętność Emhyra Biały Płomień!");
+            return;
+        }
+
+        // Sprawdzenie czy dowódca był już używany
+        if ((gracz == 1 && dowodcaUzytyGracz1) || (gracz == 2 && dowodcaUzytyGracz2)) {
+            System.out.println("Umiejętność dowódcy została już użyta w tej grze!");
+            return;
+        }
+
+        Karta aktualnyDowodca = (gracz == 1) ? dowodcaGracz1 : dowodcaGracz2;
+
+        // Sprawdź czy to Stokrotka z Dolin (umiejętność pasywna)
+        if (aktualnyDowodca != null && aktualnyDowodca.getNazwa().contains("Stokrotka z Dolin")) {
+            System.out.println("Francesca Stokrotka z Dolin ma umiejętność pasywną - nie można jej aktywować!");
+            return;
+        }
+
+        String typDowodcy = sprawdzDowodce(gracz);
+        if (typDowodcy.isEmpty()) {
+            System.out.println("Gracz " + gracz + " nie ma aktywnego dowódcy!");
+            return;
+        }
+
+        // Pomijamy pasywne umiejętności w aktywacji
+        if (typDowodcy.equals("Biały_Płomień") || typDowodcy.equals("Najeźdźca_Północy")) {
+            System.out.println("Ta umiejętność jest pasywna i działa przez całą grę!");
+            return;
+        }
+
+        System.out.println("Gracz " + gracz + " aktywuje umiejętność dowódcy: " + typDowodcy.replace("_", " "));
+
+        // Obsługa tylko aktywnych umiejętności
+        switch (typDowodcy) {
+            case "Zdobywca":
+                aktywujFoltestaZdobywce(gracz);
+                break;
+            case "Dowódca_Północy":
+                aktywujFoltestaDowodcePolnocy(gracz);
+                break;
+            case "Król_Temerii":
+                aktywujFoltestaKrolaTemerii(gracz);
+                break;
+            case "Syn_Medella":
+                aktywujFoltestaSynaMedella(gracz);
+                break;
+            case "Żelazny_Władca":
+                aktywujFoltestaZelaznegoWladce(gracz);
+                break;
+            case "Pan_południa":
+                aktywujEmhyraPanaPoludnia(gracz);
+                break;
+            case "Cesarz_Nilfgaardu":
+                aktywujEmhyraCesarza(gracz);
+                break;
+            case "Jeż_z_Erlenwaldu":
+                aktywujEmhyraJeza(gracz);
+                break;
+            case "Najeźdźca_Północy":
+                // Tylko rejestracja że umiejętność jest aktywna (efekt pasywny)
+                emhyrNajeźdźcaAktywny = true;
+                System.out.println("Emhyr Najeźdźca Północy: Aktywowano pasywną umiejętność!");
+                System.out.println("Wskrzeszanie jednostek będzie teraz losowe.");
+                break;
+            // Biały_Płomień jest pominięty - to umiejętność pasywna
+            case "Elfka_czystej_krwi":
+                aktywujFrancesceElfka(gracz);
+                break;
+            case "Stokrotka_z_Dolin":
+                // Ta umiejętność jest pasywna - nie powinna być tutaj wywoływana
+                break;
+            case "Nadzieje_Dol_Blathanna":
+                aktywujFrancesceNadzieje(gracz);
+                break;
+            case "Krolowa_Dol_Blathanna":
+                aktywujFrancesceKrolowa(gracz);
+                break;
+            case "Najpiekniejsza_kobieta":
+                aktywujFrancesceNajpiekniejsza(gracz);
+                break;
+            case "Dowódca_Czerwonych_Jeźdźców":
+                aktywujEredinaDowodceCzerwonychJezdzcow(gracz);
+                break;
+            case "Zdradziecki":
+                System.out.println("Umiejętność pasywna - siła szpiegów jest podwojona!");
+                break;
+            case "Władca_Tir_Ná_Lia":
+                aktywujEredinaWladceTirNaLia(gracz);
+                break;
+            case "Zabójca_Auberona":
+                aktywujEredinaZabojceAuberona(gracz);
+                break;
+            case "Król_Dzikiego_Gonu":
+                aktywujEredinaKrolaDzikiegoGonu(gracz);
+                break;
+        }
+
+        if (gracz == 1) {
+            dowodcaUzytyGracz1 = true;
+        } else {
+            dowodcaUzytyGracz2 = true;
+        }
+
+        // Zmiana tury tylko dla aktywnych umiejętności
+        // Nie zmieniamy tury dla pasywnych umiejętności (Najeźdźca_Północy, Biały_Płomień, Stokrotka_z_Dolin)
+        if (!typDowodcy.equals("Najeźdźca_Północy") &&
+                !typDowodcy.equals("Biały_Płomień") &&
+                !typDowodcy.equals("Stokrotka_z_Dolin")) {
+            nastepnaTura();
+        }
+    }
+    private void aktywujFrancesceElfka(int gracz) {
+        Karta trzaskajacyMroz = znajdzKartePoNazwie(gracz, "Trzaskający mróz");
+
+        if (trzaskajacyMroz != null) {
+            kartyPogodowe.add(trzaskajacyMroz);
+            System.out.println("Francesca Elfka czystej krwi: Zagrano kartę 'Trzaskający mróz'!");
+            aktywujEfektPogodowy("Trzaskający mróz");
+        } else {
+            System.out.println("Francesca Elfka czystej krwi: Brak karty 'Trzaskający mróz' w talii!");
+        }
+    }
+    private void aktywujFrancesceStokrotka(int gracz) {
+        System.out.println("Francesca Stokrotka z Dolin: Umiejętność pasywna - gracz rozpoczyna z 11 kartami zamiast 10");
+    }
+    private void aktywujFrancesceNadzieje(int gracz) {
+        int przesunieteKarty = 0;
+
+        List<Karta> kartyGracza = new ArrayList<>();
+        kartyGracza.addAll(znajdzRzadDlaGracza("Bliskie starcie", gracz));
+        kartyGracza.addAll(znajdzRzadDlaGracza("Jednostki strzeleckie", gracz));
+        kartyGracza.addAll(znajdzRzadDlaGracza("Oblężnicze", gracz));
+
+        List<Karta> kartyZRzecznoscia = kartyGracza.stream()
+                .filter(k -> k.maUmiejetnosc("Zręczność") &&
+                        k.getPozycja_2() != null &&
+                        !k.getPozycja_2().equalsIgnoreCase("Brak"))
+                .collect(Collectors.toList());
+
+        for (Karta karta : kartyZRzecznoscia) {
+            String obecnaPozycja = karta.getPozycja();
+            String alternatywnaPozycja = karta.getPozycja_2();
+
+            int obecnaSila = obliczRzeczywistaSile(karta);
+
+            String tempPozycja = karta.getPozycja();
+            karta.setPozycja(alternatywnaPozycja);
+            int alternatywnaSila = obliczRzeczywistaSile(karta);
+            karta.setPozycja(tempPozycja);
+
+            if (alternatywnaSila > obecnaSila) {
+                znajdzRzadDlaGracza(obecnaPozycja, gracz).remove(karta);
+                znajdzRzadDlaGracza(alternatywnaPozycja, gracz).add(karta);
+                karta.setPozycja(alternatywnaPozycja);
+                przesunieteKarty++;
+            }
+        }
+
+        System.out.println("Francesca Nadzieja Dol Blathanna: Przesunięto " + przesunieteKarty + " kart(y) do optymalnych rzędów!");
+    }
+    private void aktywujFrancesceKrolowa(int gracz) {
+        int przeciwnik = (gracz == 1) ? 2 : 1;
+        List<Karta> rzadPrzeciwnika = znajdzRzadDlaGracza("Bliskie starcie", przeciwnik);
+        List<Karta> cmentarz = (przeciwnik == 1) ? cmentarzGracz1 : cmentarzGracz2;
+
+        int sumaSily = rzadPrzeciwnika.stream()
+                .mapToInt(this::obliczRzeczywistaSile)
+                .sum();
+
+        if (sumaSily >= 10) {
+            int maxSila = rzadPrzeciwnika.stream()
+                    .mapToInt(this::obliczRzeczywistaSile)
+                    .max()
+                    .orElse(0);
+
+            List<Karta> doZniszczenia = rzadPrzeciwnika.stream().filter(k -> obliczRzeczywistaSile(k) == maxSila).collect(Collectors.toList());
+
+            rzadPrzeciwnika.removeAll(doZniszczenia);
+            cmentarz.addAll(doZniszczenia);
+
+            System.out.println("Francesca Królowa Dol Blathanna: Zniszczono " + doZniszczenia.size() +
+                    " kart(y) o sile " + maxSila + " w rzędzie Bliskie starcie!");
+        } else {
+            System.out.println("Francesca Królowa Dol Blathanna: Suma sił w rzędzie Bliskie starcie jest mniejsza niż 10!");
+        }
+    }
+    private void aktywujFrancesceNajpiekniejsza(int gracz) {
+        List<Karta> rzadStrzelcow = znajdzRzadDlaGracza("Jednostki strzeleckie", gracz);
+
+        // Sprawdź czy jest już róg dowódcy w rzędzie
+        boolean jestRog = rzadStrzelcow.stream()
+                .anyMatch(k -> k.maUmiejetnosc("Róg dowódcy") || k.getNazwa().equalsIgnoreCase("Jaskier"));
+
+        if (!jestRog) {
+            for (Karta karta : rzadStrzelcow) {
+                if (karta.getTyp().equalsIgnoreCase("Jednostka")) {
+                    int bazowaSila = znajdzBazowaSile(karta);
+                    karta.setSila(bazowaSila * 2);
+                }
+            }
+            System.out.println("Francesca Najpiękniejsza kobieta: Podwojono siłę jednostek w rzędzie strzelców!");
+        } else {
+            System.out.println("Francesca Najpiękniejsza kobieta: Efekt nie zadziałał - w rzędzie jest już róg dowódcy!");
+        }
+    }
+
+    private void aktywujEmhyraPanaPoludnia(int gracz) {
+        int przeciwnik = gracz == 1 ? 2 : 1;
+        List<Karta> cmentarz = przeciwnik == 1 ? cmentarzGracz1 : cmentarzGracz2;
+        List<Karta> reka = gracz == 1 ? rekaGracz1 : rekaGracz2;
+
+        if (cmentarz.isEmpty()) {
+            System.out.println("Cmentarz przeciwnika jest pusty!");
+            return;
+        }
+
+        System.out.println("Wybierz kartę z cmentarza przeciwnika:");
+        for (int i = 0; i < cmentarz.size(); i++) {
+            System.out.println((i + 1) + ". " + cmentarz.get(i).getNazwa());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int wybor = scanner.nextInt() - 1;
+        scanner.nextLine(); // Czyść bufor
+
+        if (wybor >= 0 && wybor < cmentarz.size()) {
+            Karta wybranaKarta = cmentarz.remove(wybor);
+            reka.add(wybranaKarta);
+            System.out.println("Dodano kartę " + wybranaKarta.getNazwa() + " do ręki!");
+        } else {
+            System.out.println("Nieprawidłowy wybór!");
+        }
+    }
+
+    private void aktywujEmhyraCesarza(int gracz) {
+        int przeciwnik = gracz == 1 ? 2 : 1;
+        List<Karta> rekaPrzeciwnika = przeciwnik == 1 ? rekaGracz1 : rekaGracz2;
+
+        if (rekaPrzeciwnika.isEmpty()) {
+            System.out.println("Przeciwnik nie ma kart na ręce!");
+            return;
+        }
+
+        System.out.println("Trzy losowe karty z ręki przeciwnika:");
+        Random random = new Random();
+        for (int i = 0; i < Math.min(3, rekaPrzeciwnika.size()); i++) {
+            int index = random.nextInt(rekaPrzeciwnika.size());
+            Karta karta = rekaPrzeciwnika.get(index);
+            System.out.println((i + 1) + ". " + karta.getNazwa() + " | Siła: " + karta.getSila());
+        }
+    }
+
+    private void aktywujEmhyraJeza(int gracz) {
+        // Szukaj karty "Ulewny deszcz" we wszystkich możliwych miejscach (z tolerancją dla białych znaków)
+        Karta ulewnyDeszcz = znajdzKartePoNazwie(gracz, "Ulewny deszcz");
+
+        if (ulewnyDeszcz != null) {
+            // Przenieś kartę do efektów pogodowych
+            kartyPogodowe.add(ulewnyDeszcz);
+            System.out.println("Emhyr Jeż z Erlenwaldu: Zagrano kartę 'Ulewny deszcz'!");
+
+            // Aktywuj efekt pogodowy (nieważne gdzie karta była znaleziona)
+            aktywujEfektPogodowy("Ulewny deszcz");
+        } else {
+            System.out.println("Emhyr Jeż z Erlenwaldu: Brak karty 'Ulewny deszcz' w dostępnych kartach!");
+        }
+    }
+
+    // Pomocnicza metoda do znajdowania kart z tolerancją dla białych znaków
+    private Karta znajdzKartePoNazwie(int gracz, String nazwa) {
+        String nazwaNormalized = nazwa.trim().toLowerCase();
+
+        // Sprawdź talię
+        List<Karta> talia = (gracz == 1) ? taliaGracza1 : taliaGracza2;
+        for (Karta k : talia) {
+            if (k.getNazwa().trim().toLowerCase().equals(nazwaNormalized)) {
+                talia.remove(k);
+                return k;
+            }
+        }
+
+        // Sprawdź rękę
+        List<Karta> reka = (gracz == 1) ? rekaGracz1 : rekaGracz2;
+        for (Karta k : reka) {
+            if (k.getNazwa().trim().toLowerCase().equals(nazwaNormalized)) {
+                reka.remove(k);
+                return k;
+            }
+        }
+
+        // Sprawdź karty specjalne
+        List<Karta> specjalne = (gracz == 1) ? kartySpecjalneGracz1 : kartySpecjalneGracz2;
+        for (Karta k : specjalne) {
+            if (k.getNazwa().trim().toLowerCase().equals(nazwaNormalized)) {
+                specjalne.remove(k);
+                return k;
+            }
+        }
+
+        return null;
+    }
+
+    // Metoda aktywująca efekt pogodowy
+    private void aktywujEfektPogodowy(String nazwaPogody) {
+        switch(nazwaPogody.trim().toLowerCase()) {
+            case "ulewny deszcz":
+                System.out.println("EFEKTY: Wszystkie machiny oblężnicze mają teraz siłę 1!");
+                break;
+            case "trzaskający mróz":
+                System.out.println("EFEKTY: Wszystkie karty wręcz mają teraz siłę 1!");
+                break;
+            case "gęsta mgła":
+                System.out.println("EFEKTY: Wszystkie karty dystansowe mają teraz siłę 1!");
+                break;
+        }
+    }
+    private void aktywujEredinaDowodceCzerwonychJezdzcow(int gracz) {
+        List<Karta> rzadBliski = znajdzRzadDlaGracza("Bliskie starcie", gracz);
+
+        // Sprawdź czy jest już róg dowódcy w rzędzie
+        boolean jestRog = rzadBliski.stream()
+                .anyMatch(k -> k.maUmiejetnosc("Róg dowódcy") || k.getNazwa().equalsIgnoreCase("Jaskier"));
+
+        if (!jestRog) {
+            for (Karta karta : rzadBliski) {
+                if (karta.getTyp().equalsIgnoreCase("Jednostka")) {
+                    int bazowaSila = znajdzBazowaSile(karta);
+                    karta.setSila(bazowaSila * 2);
+                }
+            }
+            System.out.println("Eredin Dowódca Czerwonych Jeźdźców: Podwojono siłę jednostek w rzędzie bliskiego starcia!");
+        } else {
+            System.out.println("Eredin Dowódca Czerwonych Jeźdźców: Efekt nie zadziałał - w rzędzie jest już róg dowódcy!");
+        }
+    }
+    private void aktywujEredinaKrolaDzikiegoGonu(int gracz) {
+        List<Karta> talia = (gracz == 1) ? taliaGracza1 : taliaGracza2;
+        List<Karta> kartyPogodoweWTalii = talia.stream()
+                .filter(k -> k.getNazwa().equalsIgnoreCase("Ulewny deszcz") ||
+                        k.getNazwa().equalsIgnoreCase("Trzaskający mróz") ||
+                        k.getNazwa().equalsIgnoreCase("Gęsta mgła") ||
+                        k.getNazwa().equalsIgnoreCase("Czyste niebo"))
+                .collect(Collectors.toList());
+
+        if (kartyPogodoweWTalii.isEmpty()) {
+            System.out.println("Brak kart pogodowych w talii!");
+            return;
+        }
+
+        System.out.println("Wybierz kartę pogodową:");
+        for (int i = 0; i < kartyPogodoweWTalii.size(); i++) {
+            System.out.println((i + 1) + ". " + kartyPogodoweWTalii.get(i).getNazwa());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int wybor = scanner.nextInt() - 1;
+            if (wybor >= 0 && wybor < kartyPogodoweWTalii.size()) {
+                Karta wybranaPogoda = kartyPogodoweWTalii.get(wybor);
+                talia.remove(wybranaPogoda);
+                kartyPogodowe.add(wybranaPogoda);
+                System.out.println("Zagrano kartę pogodową: " + wybranaPogoda.getNazwa());
+                aktywujEfektPogodowy(wybranaPogoda.getNazwa());
+            } else {
+                System.out.println("Nieprawidłowy wybór!");
+            }
+        } catch (Exception e) {
+            System.out.println("Błędny wybór!");
+        }
+    }
+    private void aktywujEredinaZabojceAuberona(int gracz) {
+        List<Karta> cmentarz = (gracz == 1) ? cmentarzGracz1 : cmentarzGracz2;
+        List<Karta> reka = (gracz == 1) ? rekaGracz1 : rekaGracz2;
+
+        if (cmentarz.isEmpty()) {
+            System.out.println("Cmentarz jest pusty!");
+            return;
+        }
+
+        System.out.println("Wybierz kartę z cmentarza:");
+        for (int i = 0; i < cmentarz.size(); i++) {
+            System.out.println((i + 1) + ". " + cmentarz.get(i).getNazwa());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        try {
+            int wybor = scanner.nextInt() - 1;
+            if (wybor >= 0 && wybor < cmentarz.size()) {
+                Karta wybranaKarta = cmentarz.remove(wybor);
+                reka.add(wybranaKarta);
+                System.out.println("Dodano do ręki: " + wybranaKarta.getNazwa());
+            } else {
+                System.out.println("Nieprawidłowy wybór!");
+            }
+        } catch (Exception e) {
+            System.out.println("Błędny wybór!");
+        }
+    }
+    private void aktywujEredinaWladceTirNaLia(int gracz) {
+        List<Karta> reka = (gracz == 1) ? rekaGracz1 : rekaGracz2;
+        List<Karta> talia = (gracz == 1) ? taliaGracza1 : taliaGracza2;
+        List<Karta> cmentarz = (gracz == 1) ? cmentarzGracz1 : cmentarzGracz2;
+
+        if (reka.size() < 2) {
+            System.out.println("Za mało kart na ręce (wymagane 2)!");
+            return;
+        }
+
+        if (talia.isEmpty()) {
+            System.out.println("Talia jest pusta!");
+            return;
+        }
+
+        // Wybór 2 kart z ręki
+        System.out.println("Wybierz 2 karty z ręki do oddania:");
+        for (int i = 0; i < reka.size(); i++) {
+            System.out.println((i + 1) + ". " + reka.get(i).getNazwa());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Wybierz pierwszą kartę: ");
+            int wybor1 = scanner.nextInt() - 1;
+            System.out.print("Wybierz drugą kartę: ");
+            int wybor2 = scanner.nextInt() - 1;
+
+            if (wybor1 >= 0 && wybor1 < reka.size() &&
+                    wybor2 >= 0 && wybor2 < reka.size() &&
+                    wybor1 != wybor2) {
+
+                // Wybór karty z talii
+                System.out.println("Wybierz kartę z talii:");
+                for (int i = 0; i < talia.size(); i++) {
+                    System.out.println((i + 1) + ". " + talia.get(i).getNazwa());
+                }
+                System.out.print("Twój wybór: ");
+                int wyborKarty = scanner.nextInt() - 1;
+
+                if (wyborKarty >= 0 && wyborKarty < talia.size()) {
+                    // Wymiana kart
+                    Karta karta1 = reka.remove(Math.max(wybor1, wybor2));
+                    Karta karta2 = reka.remove(Math.min(wybor1, wybor2));
+                    Karta wybranaKarta = talia.remove(wyborKarty);
+
+                    cmentarz.add(karta1);
+                    cmentarz.add(karta2);
+                    reka.add(wybranaKarta);
+
+                    System.out.println("Wymieniono " + karta1.getNazwa() + " i " + karta2.getNazwa() +
+                            " na " + wybranaKarta.getNazwa() + " z talii");
+                } else {
+                    System.out.println("Nieprawidłowy wybór karty z talii!");
+                }
+            } else {
+                System.out.println("Nieprawidłowy wybór kart z ręki!");
+            }
+        } catch (Exception e) {
+            System.out.println("Błędny wybór!");
+        }
+    }
+    private void aktywujEmhyraNajezdzce(int gracz) {
+        emhyrNajeźdźcaAktywny = true;
+        System.out.println("Emhyr Najeźdźca Północy: Aktywowano pasywną umiejętność!");
+        System.out.println("Wskrzeszanie jednostek będzie teraz losowe zamiast z wyboru.");
+    }
+
+    private void aktywujEmhyraBialyPlomien(int gracz) {
+        emhyrBiałyPłomieńAktywny = true;
+        System.out.println("Emhyr Biały Płomień: Aktywowano pasywną umiejętność!");
+        System.out.println("Umiejętność dowódcy przeciwnika jest zablokowana!");
+    }
+    private void aktywujFoltestaZdobywce(int gracz) {
+        Map<String, Integer> efekty = gracz == 1 ? efektyDowodcowGracz1 : efektyDowodcowGracz2;
+        efekty.put("Zdobywca", 2); // Współczynnik mnożenia siły
+
+        List<Karta> rzadOblezenia = znajdzRzadDlaGracza("Oblężnicze", gracz);
+
+        // Sprawdź czy jest już róg dowódcy w rzędzie
+        boolean jestRog = rzadOblezenia.stream()
+                .anyMatch(k -> k.maUmiejetnosc("Róg dowódcy") || k.getNazwa().equalsIgnoreCase("Jaskier"));
+
+        if (!jestRog) {
+            for (Karta karta : rzadOblezenia) {
+                if (karta.getTyp().equalsIgnoreCase("Jednostka")) {
+                    int bazowaSila = znajdzBazowaSile(karta);
+                    karta.setSila(bazowaSila * 2);
+                }
+            }
+            System.out.println("Foltest Zdobywca: Podwojono siłę wszystkich jednostek w rzędzie oblężniczym!");
+            System.out.println("Nowe karty dodane do tego rzędu również będą miały podwojoną siłę!");
+        } else {
+            System.out.println("Foltest Zdobywca: Efekt nie zadziałał - w rzędzie jest już aktywny róg dowódcy!");
+            efekty.remove("Zdobywca"); // Usuwamy efekt jeśli nie może być aktywny
+        }
+    }
+
+    private void aktywujFoltestaSynaMedella(int gracz) {
+        int przeciwnik = gracz == 1 ? 2 : 1;
+        List<Karta> rzadStrzelcow = znajdzRzadDlaGracza("Jednostki strzeleckie", przeciwnik);
+
+        int sumaSily = rzadStrzelcow.stream()
+                .mapToInt(this::obliczRzeczywistaSile)
+                .sum();
+
+        if (sumaSily >= 10) {
+            OptionalInt maxSila = rzadStrzelcow.stream()
+                    .mapToInt(Karta::getSila)
+                    .max();
+
+            if (maxSila.isPresent()) {
+                List<Karta> doZniszczenia = rzadStrzelcow.stream()
+                        .filter(k -> k.getSila() == maxSila.getAsInt())
+                        .collect(Collectors.toList());
+
+                List<Karta> cmentarz = przeciwnik == 1 ? cmentarzGracz1 : cmentarzGracz2;
+                doZniszczenia.forEach(cmentarz::add);
+                rzadStrzelcow.removeAll(doZniszczenia);
+
+                System.out.println("Foltest Syn Medella: Zniszczono " + doZniszczenia.size() +
+                        " najsilniejszych jednostek przeciwnika w rzędzie strzelców!");
+            }
+        } else {
+            System.out.println("Foltest Syn Medella: Suma sił w rzędzie strzelców przeciwnika jest mniejsza niż 10!");
+        }
+    }
+
+    private void aktywujFoltestaKrolaTemerii(int gracz) {
+        List<Karta> talia = gracz == 1 ? taliaGracza1 : taliaGracza2;
+        Optional<Karta> gestaMgla = talia.stream()
+                .filter(k -> k.getNazwa().equalsIgnoreCase("Gęsta mgła"))
+                .findFirst();
+
+        if (gestaMgla.isPresent()) {
+            Karta karta = gestaMgla.get();
+            talia.remove(karta);
+            kartyPogodowe.add(karta);
+            System.out.println("Foltest Król Temerii: Zagrano kartę Gęsta mgła z talii!");
+        } else {
+            System.out.println("Foltest Król Temerii: Brak karty Gęsta mgła w talii!");
+        }
+    }
+
+    private void aktywujFoltestaDowodcePolnocy(int gracz) {
+        if (!kartyPogodowe.isEmpty()) {
+            kartyPogodowe.clear();
+            System.out.println("Foltest Dowódca Północy: Usunięto wszystkie efekty pogodowe!");
+        } else {
+            System.out.println("Foltest Dowódca Północy: Brak aktywnych efektów pogodowych!");
+        }
+    }
+
+    private void aktywujFoltestaZelaznegoWladce(int gracz) {
+        int przeciwnik = gracz == 1 ? 2 : 1;
+        List<Karta> rzadOblezenia = znajdzRzadDlaGracza("Oblężnicze", przeciwnik);
+
+        int sumaSily = rzadOblezenia.stream()
+                .mapToInt(this::obliczRzeczywistaSile)
+                .sum();
+
+        if (sumaSily >= 10) {
+            OptionalInt maxSila = rzadOblezenia.stream()
+                    .mapToInt(Karta::getSila)
+                    .max();
+
+            if (maxSila.isPresent()) {
+                List<Karta> doZniszczenia = rzadOblezenia.stream()
+                        .filter(k -> k.getSila() == maxSila.getAsInt())
+                        .collect(Collectors.toList());
+
+                List<Karta> cmentarz = przeciwnik == 1 ? cmentarzGracz1 : cmentarzGracz2;
+                doZniszczenia.forEach(cmentarz::add);
+                rzadOblezenia.removeAll(doZniszczenia);
+
+                System.out.println("Foltest Żelazny Władca: Zniszczono " + doZniszczenia.size() +
+                        " najsilniejszych jednostek przeciwnika w rzędzie oblężniczym!");
+            }
+        } else {
+            System.out.println("Foltest Żelazny Władca: Suma sił w rzędzie oblężniczym przeciwnika jest mniejsza niż 10!");
         }
     }
 
@@ -702,7 +1477,16 @@ public class Gra {
         // Karty specjalne i pogodowe są usuwane
         kartySpecjalneGracz1.clear();
         kartySpecjalneGracz2.clear();
-        kartyPogodowe.clear();
+
+        if (zetonyZyciaGracz1 <= 0 || zetonyZyciaGracz2 <= 0) {
+            kartyPogodowe.clear();
+            efektyDowodcowGracz1.clear();
+            efektyDowodcowGracz2.clear();
+            dowodcaUzytyGracz1 = false;
+            dowodcaUzytyGracz2 = false;
+            emhyrNajeźdźcaAktywny = false;
+            emhyrBiałyPłomieńAktywny = false;
+        }
     }
 
     // Nowa metoda pomocnicza
@@ -932,82 +1716,36 @@ public class Gra {
     }
     private void aktywujZmartwychwstanie(Karta karta) {
         List<Karta> cmentarz = (aktualnyGracz == 1) ? cmentarzGracz1 : cmentarzGracz2;
-
         List<Karta> jednostkiNaCmentarzu = cmentarz.stream()
                 .filter(k -> k.getTyp().equalsIgnoreCase("Jednostka"))
                 .collect(Collectors.toList());
 
         if (jednostkiNaCmentarzu.isEmpty()) {
-            System.out.println("Brak jednostek na cmentarzu do wskrzeszenia - karta zostaje zagrana normalnie.");
-
-            // Zagraj kartę normalnie do odpowiedniego rzędu
-            List<Karta> wybranyRzad = znajdzRzad(karta);
-            if (wybranyRzad != null) {
-                wybranyRzad.add(karta);
-                System.out.println("Gracz " + aktualnyGracz + " zagrał kartę " + karta.getNazwa() + " normalnie.");
-            } else {
-                System.out.println("Błąd! Nie można zagrać tej karty.");
-                // Zwróć kartę do ręki
-                if (aktualnyGracz == 1) {
-                    rekaGracz1.add(karta);
-                } else {
-                    rekaGracz2.add(karta);
-                }
-            }
+            System.out.println("Brak jednostek na cmentarzu - karta zostaje zagrana normalnie.");
+            dodajKarteDoRzedu(karta, karta.getPozycja(), aktualnyGracz);
             return;
         }
 
-        System.out.println("Wybierz jednostkę do wskrzeszenia:");
-        for (int i = 0; i < jednostkiNaCmentarzu.size(); i++) {
-            Karta jednostka = jednostkiNaCmentarzu.get(i);
-            System.out.println((i + 1) + ". " + jednostka.getNazwa() +
-                    " (Siła: " + jednostka.getSila() +
-                    ", Pozycja: " + jednostka.getPozycja() + ")");
-        }
+        if (emhyrNajeźdźcaAktywny) {
+            // Losowe wskrzeszenie - efekt Najeźdźcy Północy
+            Karta wybranaKarta = jednostkiNaCmentarzu.get(new Random().nextInt(jednostkiNaCmentarzu.size()));
+            cmentarz.remove(wybranaKarta);
+            dodajKarteDoRzedu(wybranaKarta, wybranaKarta.getPozycja(), aktualnyGracz);
+            System.out.println("Najeźdźca Północy: Losowo wskrzeszono " + wybranaKarta.getNazwa());
+        } else {
+            // Standardowe wskrzeszenie z wyborem
+            System.out.println("Wybierz jednostkę do wskrzeszenia:");
+            for (int i = 0; i < jednostkiNaCmentarzu.size(); i++) {
+                System.out.println((i + 1) + ". " + jednostkiNaCmentarzu.get(i).getNazwa());
+            }
 
-        Scanner scanner = new Scanner(System.in);
-        try {
+            Scanner scanner = new Scanner(System.in);
             int wybor = scanner.nextInt() - 1;
             if (wybor >= 0 && wybor < jednostkiNaCmentarzu.size()) {
                 Karta wybranaKarta = jednostkiNaCmentarzu.get(wybor);
-
-                // Usuń z cmentarza
                 cmentarz.remove(wybranaKarta);
-
-                // Dodaj do odpowiedniego rzędu (BEZ aktywacji umiejętności)
-                List<Karta> rzad = znajdzRzadDlaGracza(wybranaKarta.getPozycja(), aktualnyGracz);
-                rzad.add(wybranaKarta);
-
-                System.out.println("Wskrzeszono jednostkę: " + wybranaKarta.getNazwa() +
-                        " na pozycji " + wybranaKarta.getPozycja());
-
-                // Celowo NIE aktywujemy umiejętności wskrzeszonej karty
-            } else {
-                System.out.println("Nieprawidłowy wybór! Karta zostaje zagrana normalnie.");
-                List<Karta> wybranyRzad = znajdzRzad(karta);
-                if (wybranyRzad != null) {
-                    wybranyRzad.add(karta);
-                } else {
-                    // Zwróć kartę do ręki
-                    if (aktualnyGracz == 1) {
-                        rekaGracz1.add(karta);
-                    } else {
-                        rekaGracz2.add(karta);
-                    }
-                }
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Wprowadź poprawny numer karty! Karta zostaje zagrana normalnie.");
-            List<Karta> wybranyRzad = znajdzRzad(karta);
-            if (wybranyRzad != null) {
-                wybranyRzad.add(karta);
-            } else {
-                // Zwróć kartę do ręki
-                if (aktualnyGracz == 1) {
-                    rekaGracz1.add(karta);
-                } else {
-                    rekaGracz2.add(karta);
-                }
+                dodajKarteDoRzedu(wybranaKarta, wybranaKarta.getPozycja(), aktualnyGracz);
+                System.out.println("Wskrzeszono: " + wybranaKarta.getNazwa());
             }
         }
     }
@@ -1053,13 +1791,13 @@ public class Gra {
     }
     private List<Karta> znajdzRzadDlaGracza(String pozycja, int gracz) {
         if (pozycja.equalsIgnoreCase("Bliskie starcie")) {
-            return (gracz == 1) ? rzadBliskiGracz1 : rzadBliskiGracz2;
+            return gracz == 1 ? rzadBliskiGracz1 : rzadBliskiGracz2;
         } else if (pozycja.equalsIgnoreCase("Jednostki strzeleckie")) {
-            return (gracz == 1) ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
+            return gracz == 1 ? rzadSrodkowyGracz1 : rzadSrodkowyGracz2;
         } else if (pozycja.equalsIgnoreCase("Oblężnicze")) {
-            return (gracz == 1) ? rzadDalszyGracz1 : rzadDalszyGracz2;
+            return gracz == 1 ? rzadDalszyGracz1 : rzadDalszyGracz2;
         }
-        return null;
+        return new ArrayList<>();
     }
     private List<Karta> znajdzNajsilniejszeKarty() {
         List<Karta> wszystkieKarty = new ArrayList<>();

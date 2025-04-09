@@ -63,7 +63,7 @@ public class BazaDanych {
             while (resultSet.next()) {
                 Karta karta = new Karta(
                         resultSet.getInt("id"),
-                        resultSet.getString("nazwa"),
+                        resultSet.getString("nazwa").trim(), // Dodaj trim() przy wczytywaniu nazwy
                         resultSet.getString("typ"),
                         resultSet.getString("talia"),
                         resultSet.getInt("punkty_sily"),

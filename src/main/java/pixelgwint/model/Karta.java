@@ -30,7 +30,7 @@ public class Karta {
     }
 
     public String getPozycja_2() {
-        return pozycja_2 != null ? pozycja_2 : "Brak";
+        return (pozycja_2 == null || pozycja_2.trim().isEmpty()) ? "Brak" : pozycja_2.trim();
     }
 
     public boolean maUmiejetnosc(String nazwaUmiejetnosci) {
@@ -106,6 +106,9 @@ public class Karta {
 
     public void setCzyZachowana(boolean czyZachowana) {
         this.czyZachowana = czyZachowana;
+    }
+    public boolean czyTaSamaKarta(String innaNazwa) {
+        return this.nazwa.trim().equalsIgnoreCase(innaNazwa.trim());
     }
 
     @Override

@@ -11,8 +11,13 @@ public class Main {
         if (nazwaTalii == null || nazwaTalii.isEmpty()) return "";
 
         String normalized = nazwaTalii.trim().toLowerCase();
-
-        if (normalized.contains("scoia'tael") || normalized.contains("scoia tael") ||
+        if (normalized.contains("północy") || normalized.contains("polnocy")) {
+            return "Królestwo Północy";
+        }
+        else if (normalized.contains("nilfgaard") || normalized.contains("nilfgard")) {
+            return "Nilfgaard";
+        }
+        else if (normalized.contains("scoia'tael") || normalized.contains("scoia tael") ||
                  normalized.contains("scoiatael")) {
             return "Scoia'tael";
         }
@@ -73,10 +78,12 @@ public class Main {
         System.out.println("Gracz 2 wybiera karty:");
         List<Karta> talia2 = wybierzKarty(BazaDanych.pobierzKartyZTalii(taliaGracza2));
         dowodcaGracza2 = znajdzDowodce(talia2);  // Znajdź dowódcę w talii Gracza 2
+        boolean gracz1Stokrotka = dowodcaGracza1 != null && dowodcaGracza1.getNazwa().contains("Stokrotka z Dolin");
+        boolean gracz2Stokrotka = dowodcaGracza2 != null && dowodcaGracza2.getNazwa().contains("Stokrotka z Dolin");
 
+        List<Karta> rekaGracza1 = wylosujKartyDoGry(talia1, 10, gracz1Stokrotka);
+        List<Karta> rekaGracza2 = wylosujKartyDoGry(talia2, 10, gracz2Stokrotka);
 
-        List<Karta> rekaGracza1 = wylosujKartyDoGry(talia1, 10);
-        List<Karta> rekaGracza2 = wylosujKartyDoGry(talia2, 10);
 
         if (pierwszyGracz == 0) {
             System.out.println("\nGracz 1 zaczyna! Możesz wymienić 2 karty.");
@@ -349,7 +356,7 @@ public class Main {
         }
         return !dowodcaUsuniety; // Jeśli dowódca został usunięty, zwracamy false
     }
-    public static List<Karta> wylosujKartyDoGry(List<Karta> talia, int liczbaKart) {
+    public static List<Karta> wylosujKartyDoGry(List<Karta> talia, int liczbaKart, boolean czyStokrotkaZDolin) {
         List<Karta> taliaBezDowodcy = new ArrayList<>();
 
         // Filtrowanie talii - usuwamy karty Dowódcy
@@ -359,11 +366,13 @@ public class Main {
             }
         }
 
+        // Jeśli to Stokrotka z Dolin, zwiększ liczbę kart o 1
+        int rzeczywistaLiczbaKart = czyStokrotkaZDolin ? liczbaKart + 1 : liczbaKart;
+
         // Tasowanie kart i losowanie ręki
         Collections.shuffle(taliaBezDowodcy);
-        return taliaBezDowodcy.subList(0, Math.min(liczbaKart, taliaBezDowodcy.size()));
-    }
-    private static Karta dowodcaGracza1 = null;
+        return taliaBezDowodcy.subList(0, Math.min(rzeczywistaLiczbaKart, taliaBezDowodcy.size()));
+    }    private static Karta dowodcaGracza1 = null;
     private static Karta dowodcaGracza2 = null;
 
     private static Karta znajdzDowodce(List<Karta> talia) {

@@ -47,23 +47,23 @@ public class Karta {
         }
 
         // Specjalny przypadek - Olbrzymi krabopająk
-        if (this.nazwa.equals("Olbrzymi krabopająk") && innaKarta.nazwa.equals("Krabopająk")) {
+        if ((this.nazwa.equals("Olbrzymi krabopająk") && innaKarta.nazwa.equals("Krabopająk")) ||
+                (this.nazwa.equals("Krabopająk") && innaKarta.nazwa.equals("Olbrzymi krabopająk"))) {
             return true;
         }
 
         // Grupy specjalne (Wampiry, Wiedźmy)
         if ((this.nazwa.startsWith("Wampiry: ") && innaKarta.nazwa.startsWith("Wampiry: ")) ||
                 (this.nazwa.startsWith("Wiedźma: ") && innaKarta.nazwa.startsWith("Wiedźma: "))) {
-            return this.sila == innaKarta.sila;
+            return this.sila == innaKarta.sila; // Wampiry/Wiedźmy tej samej siły tworzą braterstwo
         }
 
         // Standardowe braterstwo
         return this.nazwa.equals(innaKarta.nazwa) &&
                 this.sila == innaKarta.sila &&
-                this.typ.equals("Jednostka") && // Tylko jednostki
+                this.typ.equals("Jednostka") &&
                 innaKarta.typ.equals("Jednostka");
     }
-
     public int getId() {
         return id;
     }

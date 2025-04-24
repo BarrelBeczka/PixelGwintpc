@@ -1,50 +1,52 @@
 package pixelgwint.baza;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import pixelgwint.model.Karta;
 
-import java.sql.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 public class BazaDanych {
-    private static final String URL = "jdbc:mysql://34.116.199.192:3306/pixelgwint";
-    private static final String USER = "pixelgwint_u1";
-    private static final String PASSWORD = "5636d5ca";
-
-
-    public static Connection polacz() {
-        try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Błąd podczas łączenia z bazą danych: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public static void rozlacz(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.out.println("Błąd podczas rozłączania z bazą danych: " + e.getMessage());
-        }
-    }
+    private static final String CSV_FILE_PATH = "pixelgwintdb.csv";
+    private static final char CSV_SEPARATOR = ';';
 
     public static List<String> pobierzTalie() {
         List<String> talie = new ArrayList<>();
-        String sql = "SELECT DISTINCT talia FROM Karty";
 
-        try (Connection connection = polacz();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
+        if (!new File(CSV_FILE_PATH).exists()) {
+            System.err.println("BŁĄD: Brak pliku CSV w: " + new File(CSV_FILE_PATH).getAbsolutePath());
+            return talie;
+        }
 
-            while (resultSet.next()) {
-                talie.add(resultSet.getString("talia"));
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH),StandardCharsets.UTF_8);
+             CSVReader csvReader = new CSVReaderBuilder(reader)
+                     .withSkipLines(1) // Pomijamy nagłówek
+                     .withCSVParser(new com.opencsv.CSVParserBuilder()
+                             .withSeparator(CSV_SEPARATOR)
+                             .build())
+                     .build()) {
+
+            String[] record;
+            while ((record = csvReader.readNext()) != null) {
+                if (record.length > 6) {
+                    String talia = record[6].trim();
+                    if (!talia.isEmpty() && !talie.contains(talia)) {
+                        talie.add(talia);
+                    }
+                }
             }
-
-        } catch (SQLException e) {
-            System.out.println("Błąd podczas pobierania talii: " + e.getMessage());
+        } catch (IOException | CsvException e) {
+            System.err.println("BŁĄD WCZYTYWANIA TALII: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return talie;
@@ -52,33 +54,61 @@ public class BazaDanych {
 
     public static List<Karta> pobierzKartyZTalii(String nazwaTalii) {
         List<Karta> karty = new ArrayList<>();
-        String sql = "SELECT * FROM Karty WHERE talia = ?";
 
-        try (Connection connection = polacz();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+        if (!new File(CSV_FILE_PATH).exists()) {
+            System.err.println("BŁĄD: Brak pliku CSV!");
+            return karty;
+        }
 
-            statement.setString(1, nazwaTalii);
-            ResultSet resultSet = statement.executeQuery();
+        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH),StandardCharsets.UTF_8);
+             CSVReader csvReader = new CSVReaderBuilder(reader)
+                     .withSkipLines(1) // Pomijamy nagłówek
+                     .withCSVParser(new com.opencsv.CSVParserBuilder()
+                             .withSeparator(CSV_SEPARATOR)
+                             .build())
+                     .build()) {
 
-            while (resultSet.next()) {
-                Karta karta = new Karta(
-                        resultSet.getInt("id"),
-                        resultSet.getString("nazwa").trim(), // Dodaj trim() przy wczytywaniu nazwy
-                        resultSet.getString("typ"),
-                        resultSet.getString("talia"),
-                        resultSet.getInt("punkty_sily"),
-                        resultSet.getString("umiejetnosc"),
-                        resultSet.getString("umiejetnosc_2"), // Nowa kolumna
-                        resultSet.getString("pozycja"),
-                        resultSet.getString("pozycja_2"), // Nowa kolumna
-                        resultSet.getString("grafika")
-                );
-                karty.add(karta);
+            String[] record;
+            while ((record = csvReader.readNext()) != null) {
+                if (record.length >= 10 && record[6].trim().equalsIgnoreCase(nazwaTalii)) {
+                    try {
+                        Karta karta = new Karta(
+                                parseInt(record[0]),
+                                safeValue(record[1]),
+                                safeValue(record[2]),
+                                safeValue(record[6]),
+                                parseInt(record[3]),
+                                safeValue(record[5]),
+                                safeValue(record[8]),
+                                safeValue(record[4]),
+                                safeValue(record[9]),
+                                safeValue(record[7])
+                        );
+                        karty.add(karta);
+                    } catch (Exception e) {
+                        System.err.println("BŁĄD TWORZENIA KARTY: " + String.join(";", record));
+                        e.printStackTrace();
+                    }
+                }
             }
-        } catch (SQLException e) {
-            System.out.println("Błąd podczas pobierania kart z talii: " + e.getMessage());
+        } catch (IOException | CsvException e) {
+            System.err.println("BŁĄD WCZYTYWANIA KART: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return karty;
+    }
+
+    private static String safeValue(String value) {
+        return (value == null || value.equalsIgnoreCase("N/D")) ? "Brak" : value.trim();
+    }
+
+    private static int parseInt(String value) {
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            System.err.println("NIEPRAWIDŁOWA WARTOŚĆ: " + value);
+            return 0;
+        }
     }
 }

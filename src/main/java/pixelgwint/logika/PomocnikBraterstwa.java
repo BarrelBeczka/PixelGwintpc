@@ -9,19 +9,12 @@ public class PomocnikBraterstwa {
     public static List<Karta> znajdzKartyBraterstwa(Karta aktualnaKarta, List<Karta> wszystkieKarty) {
         List<Karta> kartyBraterstwa = new ArrayList<>();
 
-        if (!aktualnaKarta.getUmiejetnosc().equals("Braterstwo")) {
-            return kartyBraterstwa;
-        }
-
-        // Znajdź wszystkie pasujące karty (również te nie będące na ręce)
         for (Karta karta : wszystkieKarty) {
-            if (karta != aktualnaKarta &&
-                    aktualnaKarta.czyTworzyBraterstwo(karta) &&
-                    (karta.getTyp().equals("Jednostka") || karta.getTyp().equals("Bohater"))) {
+            // Dodatkowe sprawdzenie czy to nie ta sama instancja karty
+            if (karta != aktualnaKarta && aktualnaKarta.czyTworzyBraterstwo(karta)) {
                 kartyBraterstwa.add(karta);
             }
         }
-
         return kartyBraterstwa;
     }
 }

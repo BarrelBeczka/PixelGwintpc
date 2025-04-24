@@ -209,33 +209,70 @@ public class Gra {
         // Flaga czyZachowana zostanie sprawdzona w wyczyscPlansze()
     }
     private void aktywujBraterstwo(Karta zagranaKarta, List<Karta> rzadZagrania) {
-        // Pobierz pełną talię gracza (bez dowódcy)
-        List<Karta> taliaGracza = (aktualnyGracz == 1) ? taliaGracza1 : taliaGracza2;
+        // Pobierz odpowiednie listy kart
         List<Karta> rekaGracza = (aktualnyGracz == 1) ? rekaGracz1 : rekaGracz2;
+        List<Karta> taliaGracza = (aktualnyGracz == 1) ? taliaGracza1 : taliaGracza2;
 
-        // Znajdź wszystkie pasujące karty
-        List<Karta> kartyBraterstwa = PomocnikBraterstwa.znajdzKartyBraterstwa(zagranaKarta, taliaGracza);
+        // Stwórz kopie list, aby nie modyfikować oryginałów podczas iteracji
+        List<Karta> kartyDoSprawdzenia = new ArrayList<>();
+        kartyDoSprawdzenia.addAll(new ArrayList<>(rekaGracza));
+        kartyDoSprawdzenia.addAll(new ArrayList<>(taliaGracza));
 
-        if (!kartyBraterstwa.isEmpty()) {
-            System.out.println("Aktywacja Braterstwa dla karty " + zagranaKarta.getNazwa() + ":");
+        // Filtruj karty już na planszy
+        kartyDoSprawdzenia.removeAll(rzadBliskiGracz1);
+        kartyDoSprawdzenia.removeAll(rzadSrodkowyGracz1);
+        kartyDoSprawdzenia.removeAll(rzadDalszyGracz1);
+        kartyDoSprawdzenia.removeAll(rzadBliskiGracz2);
+        kartyDoSprawdzenia.removeAll(rzadSrodkowyGracz2);
+        kartyDoSprawdzenia.removeAll(rzadDalszyGracz2);
 
-            for (Karta karta : kartyBraterstwa) {
-                // Znajdź odpowiedni rząd dla przywoływanej karty
-                List<Karta> odpowiedniRzad = znajdzRzadDlaGracza(karta.getPozycja(), aktualnyGracz);
+        // Znajdź unikalne karty braterstwa (usuwając duplikaty)
+        Set<Karta> unikalneKartyBraterstwa = new HashSet<>(
+                PomocnikBraterstwa.znajdzKartyBraterstwa(zagranaKarta, kartyDoSprawdzenia)
+        );
 
-                // Dodaj kartę do odpowiedniego rzędu
-                odpowiedniRzad.add(karta);
-                System.out.println(" - Przywołano kartę: " + karta.getNazwa() + " do rzędu: " + karta.getPozycja());
+        if (!unikalneKartyBraterstwa.isEmpty()) {
+            System.out.println("Aktywacja Braterstwa dla " + zagranaKarta.getNazwa() + ":");
 
-                // Usuń z ręki lub talii
-                rekaGracza.remove(karta);
-                if (aktualnyGracz == 1) {
-                    taliaGracza1.remove(karta);
-                } else {
-                    taliaGracza2.remove(karta);
+            // Dla Wampirów/Wiedźm - przywołaj wszystkie unikalne pasujące karty
+            if (zagranaKarta.getNazwa().startsWith("Wampiry: ") ||
+                    zagranaKarta.getNazwa().startsWith("Wiedźma: ")) {
+
+                for (Karta karta : unikalneKartyBraterstwa) {
+                    if (karta.getNazwa().startsWith(zagranaKarta.getNazwa().split(":")[0])) {
+                        dodajKarteBraterstwa(karta, rekaGracza, taliaGracza);
+                    }
                 }
             }
+            // Dla zwykłych kart - przywołaj tylko pierwszą
+            else {
+                dodajKarteBraterstwa(unikalneKartyBraterstwa.iterator().next(), rekaGracza, taliaGracza);
+            }
         }
+    }
+    private void dodajKarteBraterstwa(Karta karta, List<Karta> rekaGracza, List<Karta> taliaGracza) {
+        List<Karta> odpowiedniRzad = znajdzRzadDlaGracza(karta.getPozycja(), aktualnyGracz);
+        odpowiedniRzad.add(karta);
+
+        // Usuń z ręki/talii
+        rekaGracza.remove(karta);
+        taliaGracza.remove(karta);
+
+        System.out.println(" - Przywołano: " + karta.getNazwa() + " do " + karta.getPozycja());
+    }    private void dodajKarteBraterstwa(Karta karta) {
+        List<Karta> odpowiedniRzad = znajdzRzadDlaGracza(karta.getPozycja(), aktualnyGracz);
+        odpowiedniRzad.add(karta);
+
+        // Usuń z ręki/talii
+        if (aktualnyGracz == 1) {
+            rekaGracz1.remove(karta);
+            taliaGracza1.remove(karta);
+        } else {
+            rekaGracz2.remove(karta);
+            taliaGracza2.remove(karta);
+        }
+
+        System.out.println(" - Przywołano: " + karta.getNazwa() + " do " + karta.getPozycja());
     }
     public void rozpocznijGre() {
         Scanner scanner = new Scanner(System.in);
@@ -1643,41 +1680,39 @@ public class Gra {
         List<Karta> rzad = znajdzRzadDlaGracza(karta.getPozycja(), aktualnyGracz);
 
         for (Karta k : rzad) {
-            if (k != karta) { // Nie modyfikuj siebie samej
+            if (k != karta && k.getTyp().equalsIgnoreCase("Jednostka")) { // Tylko jednostki!
                 k.setSila(k.getSila() + 1);
             }
         }
 
-        System.out.println("Aktywowano Wysokie Morale! Wszystkie karty w rzędzie " + karta.getPozycja() +
+        System.out.println("Wysokie Morale! Jednostki w rzędzie " + karta.getPozycja() +
                 " (oprócz siebie) zyskały +1 do siły.");
     }
     private void aktywujWiez(Karta nowaKarta) {
         List<Karta> rzad = znajdzRzadDlaGracza(nowaKarta.getPozycja(), aktualnyGracz);
 
-        // Znajdź tylko zagrane karty z więzią o tej samej nazwie w TYM rzędzie
+        // Znajdź wszystkie karty z więzią o tej samej nazwie w rzędzie
         List<Karta> kartyZWiezia = rzad.stream()
-                .filter(k -> k.getNazwa().equals(nowaKarta.getNazwa())
-                        && k.maUmiejetnosc("Więź")
-                        && k != nowaKarta) // Wyklucz nową kartę
+                .filter(k -> k.getNazwa().equals(nowaKarta.getNazwa()) &&
+                        k.maUmiejetnosc("Więź") &&
+                        k != nowaKarta)
                 .collect(Collectors.toList());
 
-        int bazowaSila = nowaKarta.getSila(); // Pobierz bazową siłę nowej karty
-        int liczbaKart = kartyZWiezia.size() + 1; // Uwzględniamy nową kartę
+        if (!kartyZWiezia.isEmpty()) {
+            int bazowaSila = znajdzBazowaSile(nowaKarta);
+            int liczbaKart = kartyZWiezia.size() + 1; // +1 dla nowej karty
+            int nowaSila = bazowaSila * liczbaKart;
 
-        // Oblicz nową siłę dla WSZYSTKICH powiązanych kart (włącznie z nową)
-        int nowaSila = bazowaSila * liczbaKart;
+            // Zaktualizuj siłę wszystkich powiązanych kart
+            for (Karta k : kartyZWiezia) {
+                k.setSila(nowaSila);
+            }
+            nowaKarta.setSila(nowaSila);
 
-        // Zaktualizuj siłę wszystkich powiązanych kart w rzędzie
-        for (Karta k : kartyZWiezia) {
-            k.setSila(nowaSila);
+            System.out.println("Więź aktywna! " + liczbaKart + " karty " + nowaKarta.getNazwa() +
+                    " w rzędzie. Każda ma siłę: " + nowaSila);
         }
-        // Ustaw siłę nowej karty
-        nowaKarta.setSila(nowaSila);
-
-        System.out.println("Więź aktywna! " + liczbaKart + " karty " + nowaKarta.getNazwa() +
-                " w rzędzie. Siła każdej: " + nowaSila + " (bazowa: " + bazowaSila + ")");
-    }
-    private void aktualizujWiezPoUsunieciu(Karta usunietaKarta) {
+    }    private void aktualizujWiezPoUsunieciu(Karta usunietaKarta) {
         if (!usunietaKarta.maUmiejetnosc("Więź")) return;
 
         List<Karta> rzad = znajdzRzadDlaGracza(usunietaKarta.getPozycja(),

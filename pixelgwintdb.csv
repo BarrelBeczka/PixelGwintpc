@@ -1,0 +1,298 @@
+id;nazwa;typ;punkty_sily;pozycja;umiejetnosc;talia;grafika;umiejetnosc_2;pozycja_2
+1;Geralt z Rivii;Bohater;15;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+2;Wsparcie łuczników;Jednostka;1;Jednostki strzeleckie;Zmartwychwstanie;Nilfgaard;;Brak;N/D
+3;Pożoga;Specjalna;0;N/D;Pożoga_S;Nilfgaard;;Brak;N/D
+4;Yennefer z Vengerbergu;Bohater;7;Jednostki strzeleckie;Zmartwychwstanie;Nilfgaard;;Brak;N/D
+5;Wsparcie łuczników;Jednostka;1;Jednostki strzeleckie;Zmartwychwstanie;Nilfgaard;;Brak;N/D
+6;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Nilfgaard;;Brak;N/D
+7;Tibor Eggebracht;Bohater;10;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+8;Shilard Fitz Oesterlen;Jednostka;7;Bliskie starcie;Szpiegostwo;Nilfgaard;;Brak;N/D
+9;Stefan Skellen;Jednostka;9;Bliskie starcie;Szpiegostwo;Nilfgaard;;Brak;N/D
+10;Avallac'h;Bohater;0;Bliskie starcie;Szpiegostwo;Nilfgaard;;Brak;N/D
+11;Brygada Impera;Jednostka;3;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+12;Brygada Impera;Jednostka;3;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+13;Brygada Impera;Jednostka;3;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+14;Brygada Impera;Jednostka;3;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+15;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Nilfgaard;;Brak;N/D
+16;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Nilfgaard;;Brak;N/D
+17;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Nilfgaard;;Brak;N/D
+18;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Nilfgaard;;Brak;N/D
+19;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Nilfgaard;;Brak;N/D
+20;Kawaleria Nauzicaa;Jednostka;2;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+21;Kawaleria Nauzicaa;Jednostka;2;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+22;Kawaleria Nauzicaa;Jednostka;2;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+23;Pożoga;Specjalna;0;N/D;Pożoga_S;Nilfgaard;;Brak;N/D
+24;Pożoga;Specjalna;0;N/D;Pożoga_S;Nilfgaard;;Brak;N/D
+25;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Nilfgaard;;Brak;N/D
+26;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Nilfgaard;;Brak;N/D
+27;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Nilfgaard;;Brak;N/D
+28;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Nilfgaard;;Brak;N/D
+29;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Nilfgaard;;Brak;N/D
+30;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Nilfgaard;;Brak;N/D
+31;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Nilfgaard;;Brak;N/D
+32;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Nilfgaard;;Brak;N/D
+33;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Nilfgaard;;Brak;N/D
+34;Ulewny deszcz ;Specjalna;0;N/D;Ulewny deszcz;Nilfgaard;;Brak;N/D
+35;Ulewny deszcz ;Specjalna;0;N/D;Ulewny deszcz;Nilfgaard;;Brak;N/D
+36;Ulewny deszcz ;Specjalna;0;N/D;Ulewny deszcz;Nilfgaard;;Brak;N/D
+37;Villentretenmerth;Jednostka;7;Bliskie starcie;Pożoga_K;Nilfgaard;;Brak;N/D
+38;Morvran Voorhis;Bohater;10;Oblężnicze;Brak;Nilfgaard;;Brak;N/D
+39;Młody emisariusz;Jednostka;5;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+40;Młody emisariusz;Jednostka;5;Bliskie starcie;Więź;Nilfgaard;;Brak;N/D
+41;Wsparcie oblężnicze;Jednostka;0;Oblężnicze;Zmartwychwstanie;Nilfgaard;;Brak;N/D
+42;Nilfgaardzki łucznik;Jednostka;10;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+43;Nilfgaardzki łucznik;Jednostka;10;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+44;Jaskier;Jednostka;2;Bliskie starcie;Róg dowódcy;Nilfgaard;;Brak;N/D
+45;Morteisen;Jednostka;3;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+46;Cirilla Fiona Elen Riannon;Bohater;15;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+47;Triss Merigold;Bohater;7;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+48;Wielki Ognisty Skorpion;Jednostka;10;Oblężnicze;Brak;Nilfgaard;;Brak;N/D
+49;Menno Coehooran;Bohater;10;Bliskie starcie;Zmartwychwstanie;Nilfgaard;;Brak;N/D
+50;Vesemir;Jednostka;6;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+51;Vattier de Rideaux;Jednostka;4;Bliskie starcie;Szpiegostwo;Nilfgaard;;Brak;N/D
+52;Cynthia;Jednostka;4;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+53;Rainfarn;Jednostka;4;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+54;Emiel Regis Rohellec Terzieff;Jednostka;5;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+55;Albrich;Jednostka;2;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+56;Zerrikański Ognisty Skorpion;Jednostka;5;Oblężnicze;Brak;Nilfgaard;;Brak;N/D
+57;Zdezelowana mangonela;Jednostka;3;Oblężnicze;Brak;Nilfgaard;;Brak;N/D
+58;Saper;Jednostka;6;Oblężnicze;Brak;Nilfgaard;;Brak;N/D
+59;Renuald aep Matsen;Jednostka;5;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+60;Puttkammer;Jednostka;3;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+61;Sweers;Jednostka;2;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+62;Zoltan Chivay;Jednostka;5;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+63;Vanhemar;Jednostka;4;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+64;Vreemde;Jednostka;2;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+65;Cahir Mawr Dyffryn aep Ceallach;Jednostka;6;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+66;Assire var Anhid;Jednostka;6;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+67;Fringilla Vigo;Jednostka;6;Jednostki strzeleckie;Brak;Nilfgaard;;Brak;N/D
+68;Letho z Gulety;Bohater;10;Bliskie starcie;Brak;Nilfgaard;;Brak;N/D
+69;"Emhyr var Emreis ""Pan południa""";Dowódca;0;Dowódca;Brak;Nilfgaard;;Brak;N/D
+70;"Emhyr var Emreis ""Jeż z Erlenwaldu""";Dowódca;0;Dowódca;Brak;Nilfgaard;;Brak;N/D
+71;"Emhyr var Emreis ""Najeźdźca Północy""";Dowódca;0;Dowódca;Brak;Nilfgaard;;Brak;N/D
+72;"Emhyr var Emreis ""Cesarz Nilfgaardu""";Dowódca;0;Dowódca;Brak;Nilfgaard;;Brak;N/D
+73;"Emhyr var Emreis ""Biały Płomień Tańczący Na Kurhanach Wrogów""";Dowódca;0;Dowódca;Brak;Nilfgaard;;Brak;N/D
+263;Komandos Niebieskich Pasów;Jednostka;4;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+264;Komandos Niebieskich Pasów;Jednostka;4;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+265;Komandos Niebieskich Pasów;Jednostka;4;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+266;Mistrz Oblężeń z Kaedwen;Jednostka;1;Oblężnicze;Wysokie morale;Królestwa Północy;;Brak;N/D
+267;Mistrz Oblężeń z Kaedwen;Jednostka;1;Oblężnicze;Wysokie morale;Królestwa Północy;;Brak;N/D
+268;Mistrz Oblężeń z Kaedwen;Jednostka;1;Oblężnicze;Wysokie morale;Królestwa Północy;;Brak;N/D
+269;Biedna Pierdolona Piechota;Jednostka;1;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+270;Biedna Pierdolona Piechota;Jednostka;1;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+271;Biedna Pierdolona Piechota;Jednostka;1;Bliskie starcie;Więź;Królestwa Północy;;Brak;N/D
+272;Pożoga;Specjalna;0;N/D;Pożoga_S;Królestwa Północy;;Brak;N/D
+273;Pożoga;Specjalna;0;N/D;Pożoga_S;Królestwa Północy;;Brak;N/D
+274;Pożoga;Specjalna;0;N/D;Pożoga_S;Królestwa Północy;;Brak;N/D
+275;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Królestwa Północy;;Brak;N/D
+276;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Królestwa Północy;;Brak;N/D
+277;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Królestwa Północy;;Brak;N/D
+278;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Królestwa Północy;;Brak;N/D
+279;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Królestwa Północy;;Brak;N/D
+280;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Królestwa Północy;;Brak;N/D
+281;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Królestwa Północy;;Brak;N/D
+282;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Królestwa Północy;;Brak;N/D
+283;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Królestwa Północy;;Brak;N/D
+284;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Królestwa Północy;;Brak;N/D
+285;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Królestwa Północy;;Brak;N/D
+286;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Królestwa Północy;;Brak;N/D
+287;Ulewny Deszcz;Specjalna;0;N/D;Ulewny deszcz;Królestwa Północy;;Brak;N/D
+288;Ulewny Deszcz;Specjalna;0;N/D;Ulewny deszcz;Królestwa Północy;;Brak;N/D
+289;Ulewny Deszcz;Specjalna;0;N/D;Ulewny deszcz;Królestwa Północy;;Brak;N/D
+290;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Królestwa Północy;;Brak;N/D
+291;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Królestwa Północy;;Brak;N/D
+292;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Królestwa Północy;;Brak;N/D
+293;Rębacze z Crinfrid;Jednostka;5;Jednostki strzeleckie;Więź;Królestwa Północy;;Brak;N/D
+294;Rębacze z Crinfrid;Jednostka;5;Jednostki strzeleckie;Więź;Królestwa Północy;;Brak;N/D
+295;Rębacze z Crinfrid;Jednostka;5;Jednostki strzeleckie;Więź;Królestwa Północy;;Brak;N/D
+296;Katapulta;Jednostka;8;Oblężnicze;Więź;Królestwa Północy;;Brak;N/D
+297;Katapulta;Jednostka;8;Oblężnicze;Więź;Królestwa Północy;;Brak;N/D
+298;Balista;Jednostka;6;Oblężnicze;Brak;Królestwa Północy;;Brak;N/D
+299;Balista;Jednostka;6;Oblężnicze;Brak;Królestwa Północy;;Brak;N/D
+300;Vesemir;Jednostka;6;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+301;Wieża Oblężnicza;Jednostka;6;Oblężnicze;Brak;Królestwa Północy;;Brak;N/D
+302;Trebusz;Jednostka;6;Oblężnicze;Brak;Królestwa Północy;;Brak;N/D
+303;Trebusz;Jednostka;6;Oblężnicze;Brak;Królestwa Północy;;Brak;N/D
+304;Zygfryd z Denesle;Jednostka;5;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+305;Ves;Jednostka;5;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+306;Redański Piechur;Jednostka;1;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+307;Redański Piechur;Jednostka;1;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+308;Zoltan Chivay;Jednostka;5;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+309;Keira Metz;Jednostka;5;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+310;Detmold;Jednostka;6;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+311;Sheala De Tancarville;Jednostka;5;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+312;Yarpen Zigrin;Jednostka;2;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+313;Emiel Regis Rohellec Terzieff;Jednostka;5;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+314;Medyczka Burej Chorągwi;Jednostka;5;Oblężnicze;Zmartwychwstanie;Królestwa Północy;;Brak;N/D
+315;Cirilla Fiona Elen Riannon;Bohater;15;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+316;Triss Merigold;Bohater;7;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+317;Książę Stennis;Jednostka;5;Bliskie starcie;Szpiegostwo;Królestwa Północy;;Brak;N/D
+318;Vernon Roche;Bohater;10;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+319;Jan Natalis;Bohater;10;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+320;Villentretenmerth;Jednostka;7;Bliskie starcie;Pożoga_K;Królestwa Północy;;Brak;N/D
+321;Sigismund Dijkstra;Jednostka;4;Bliskie starcie;Szpiegostwo;Królestwa Północy;;Brak;N/D
+322;Filippa Eilhart;Bohater;10;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+323;Yennefer z Vengerbergu;Bohater;7;Jednostki strzeleckie;Zmartwychwstanie;Królestwa Północy;;Brak;N/D
+324;Esterad Thyssen;Bohater;10;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+325;Avallac'h;Bohater;0;Bliskie starcie;Szpiegostwo;Królestwa Północy;;Brak;N/D
+326;Geralt z Rivii;Bohater;15;Bliskie starcie;Brak;Królestwa Północy;;Brak;N/D
+327;Talar;Jednostka;1;Oblężnicze;Szpiegostwo;Królestwa Północy;;Brak;N/D
+328;Jaskier;Jednostka;2;Bliskie starcie;Róg dowódcy;Królestwa Północy;;Brak;N/D
+329;Sheldon Skaggs;Jednostka;4;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+330;Sabrina Glevissig;Jednostka;4;Jednostki strzeleckie;Brak;Królestwa Północy;;Brak;N/D
+331;"Foltest ""Syn Medella""";Dowódca;0;Dowódca;Brak;Królestwa Północy;;Brak;N/D
+332;"Foltest ""Żelazny Władca""";Dowódca;0;Dowódca;Brak;Królestwa Północy;;Brak;N/D
+333;"Foltest ""Zdobywca""";Dowódca;0;Dowódca;Brak;Królestwa Północy;;Brak;N/D
+334;"Foltest ""Dowódca północy""";Dowódca;0;Dowódca;Brak;Królestwa Północy;;Brak;N/D
+335;"Foltest ""Król Temerii""";Dowódca;0;Dowódca;Brak;Królestwa Północy;;Brak;N/D
+336;"Eredin Bréacc Glas ""Dowódca Czerwonych Jeźdźców""";Dowódca;0;Dowódca;Brak;Potwory;;Brak;N/D
+413;"Eredin Bréacc Glas ""Zdradziecki""";Dowódca;0;Dowódca;Brak;Potwory;;Brak;N/D
+414;"Eredin Bréacc Glas ""Władca Tir Ná Lia""";Dowódca;0;Dowódca;Brak;Potwory;;Brak;N/D
+415;"Eredin Bréacc Glas ""Zabójca Auberona""";Dowódca;0;Dowódca;Brak;Potwory;;Brak;N/D
+416;"Eredin Bréacc Glas ""Król Dzikiego Gonu""";Dowódca;0;Dowódca;Brak;Potwory;;Brak;N/D
+417;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Potwory;;Brak;N/D
+418;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Potwory;;Brak;N/D
+419;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Potwory;;Brak;N/D
+420;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Potwory;;Brak;N/D
+421;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Potwory;;Brak;N/D
+422;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Potwory;;Brak;N/D
+423;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Potwory;;Brak;N/D
+424;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Potwory;;Brak;N/D
+425;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Potwory;;Brak;N/D
+426;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Potwory;;Brak;N/D
+427;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Potwory;;Brak;N/D
+428;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Potwory;;Brak;N/D
+429;Pożoga;Specjalna;0;N/D;Pożoga_S;Potwory;;Brak;N/D
+430;Pożoga;Specjalna;0;N/D;Pożoga_S;Potwory;;Brak;N/D
+431;Pożoga;Specjalna;0;N/D;Pożoga_S;Potwory;;Brak;N/D
+432;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Potwory;;Brak;N/D
+433;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Potwory;;Brak;N/D
+434;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Potwory;;Brak;N/D
+435;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Potwory;;Brak;N/D
+436;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Potwory;;Brak;N/D
+437;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Potwory;;Brak;N/D
+438;Nekker;Jednostka;2;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+439;Nekker;Jednostka;2;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+440;Nekker;Jednostka;2;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+441;Ghul;Jednostka;1;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+442;Ghul;Jednostka;1;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+443;Ghul;Jednostka;1;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+444;Krabopająk;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+445;Krabopająk;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+446;Krabopająk;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+447;Wiedźma: Szepciucha;Jednostka;6;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+448;Wiedźma: Kuchta;Jednostka;6;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+449;Wiedźma: Prządka;Jednostka;6;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+450;Wampiry: Bruxa;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+451;Wampiry: Fleder;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+452;Wampiry: Garkain;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+453;Wampiry: Katakan;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+454;Wampiry: Ekimma;Jednostka;4;Bliskie starcie;Braterstwo;Potwory;;Brak;N/D
+455;Avallac'h;Bohater;0;Bliskie starcie;Szpiegostwo;Potwory;;Brak;N/D
+456;Leszy;Bohater;10;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+457;Yennefer z Vengerbergu;Bohater;7;Jednostki strzeleckie;Zmartwychwstanie;Potwory;;Brak;N/D
+458;Geralt z Rivii;Bohater;15;Bliskie starcie;Brak;Potwory;;Brak;N/D
+459;Cirilla;Bohater;15;Bliskie starcie;Brak;Potwory;;Brak;N/D
+460;Draug;Bohater;10;Bliskie starcie;Brak;Potwory;;Brak;N/D
+461;Kejran;Bohater;8;Bliskie starcie;Wysokie morale;Potwory;;Zręczność;Jednostki strzeleckie
+462;Imlerith;Bohater;10;Bliskie starcie;Brak;Potwory;;Brak;N/D
+463;Triss Merigold;Bohater;7;Bliskie starcie;Brak;Potwory;;Brak;N/D
+464;Królewicz ropuch;Jednostka;6;Jednostki strzeleckie;Pożoga_K;Potwory;;Brak;N/D
+465;Olbrzymi krabopająk;Jednostka;6;Oblężnicze;Braterstwo;Potwory;;Brak;N/D
+466;Jaskier;Jednostka;2;Bliskie starcie;Róg dowódcy;Potwory;;Brak;N/D
+467;Villentretenmerth;Jednostka;7;Bliskie starcie;Pożoga_K;Potwory;;Brak;N/D
+468;Widłogon;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+469;Wiwerna;Jednostka;2;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+470;Endriaga;Jednostka;2;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+471;Gargulec;Jednostka;2;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+472;Kuroliszek;Jednostka;2;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+473;Przeraza;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+474;Gryf;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+475;Lodowy Gigant;Jednostka;5;Oblężnicze;Brak;Potwory;;Brak;N/D
+476;Wilkołak;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+477;Żywiołak ognia;Jednostka;6;Oblężnicze;Brak;Potwory;;Brak;N/D
+478;Baba cmentarna;Jednostka;5;Jednostki strzeleckie;Brak;Potwory;;Brak;N/D
+479;Harpia;Jednostka;2;Bliskie starcie;Zręczność;Potwory;;Brak;Jednostki strzeleckie
+480;Harpia Celaeno;Jednostka;2;Bliskie starcie;Zręczność;Potwory;;Brak;Jednostki strzeleckie
+481;Emiel Regis Rohellec Terzieff;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+482;Zoltan Chivay;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+483;Żywiołak ziemi;Jednostka;6;Oblężnicze;Brak;Potwory;;Brak;N/D
+484;Vesemir;Jednostka;6;Bliskie starcie;Brak;Potwory;;Brak;N/D
+485;Poroniec;Jednostka;4;Bliskie starcie;Brak;Potwory;;Brak;N/D
+486;Morowa Dziewica;Jednostka;5;Bliskie starcie;Brak;Potwory;;Brak;N/D
+487;Bies;Jednostka;6;Bliskie starcie;Brak;Potwory;;Brak;N/D
+488;Mglak;Jednostka;2;Bliskie starcie;Brak;Potwory;;Brak;N/D
+489;"Francesca Findabair ""Stokrotka z Dolin""";Dowódca;0;Dowódca;Brak;Scoia'tael;;Brak;N/D
+490;"Francesca Findabair ""Elfka czystej krwi""";Dowódca;0;Dowódca;Brak;Scoia'tael;;Brak;N/D
+491;"Francesca Findabair ""Nadzieja Dol Blathanna""";Dowódca;0;Dowódca;Brak;Scoia'tael;;Brak;N/D
+492;"Francesca Findabair ""Królowa Dol Blathanna""";Dowódca;0;Dowódca;Brak;Scoia'tael;;Brak;N/D
+493;"Francesca Findabair ""Najpiękniejsza kobieta na świecie""";Dowódca;0;Dowódca;Brak;Scoia'tael;;Brak;N/D
+494;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Scoia'tael;;Brak;N/D
+495;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Scoia'tael;;Brak;N/D
+496;Manekin do ćwiczeń;Specjalna;0;N/D;Manekin do ćwiczeń;Scoia'tael;;Brak;N/D
+497;Pożoga;Specjalna;0;N/D;Pożoga_S;Scoia'tael;;Brak;N/D
+498;Pożoga;Specjalna;0;N/D;Pożoga_S;Scoia'tael;;Brak;N/D
+499;Pożoga;Specjalna;0;N/D;Pożoga_S;Scoia'tael;;Brak;N/D
+500;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Scoia'tael;;Brak;N/D
+501;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Scoia'tael;;Brak;N/D
+502;Czyste niebo;Specjalna;0;N/D;Czyste niebo;Scoia'tael;;Brak;N/D
+503;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Scoia'tael;;Brak;N/D
+504;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Scoia'tael;;Brak;N/D
+505;Ulewny deszcz;Specjalna;0;N/D;Ulewny deszcz;Scoia'tael;;Brak;N/D
+506;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Scoia'tael;;Brak;N/D
+507;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Scoia'tael;;Brak;N/D
+508;Gęsta mgła;Specjalna;0;N/D;Gęsta mgła;Scoia'tael;;Brak;N/D
+509;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Scoia'tael;;Brak;N/D
+510;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Scoia'tael;;Brak;N/D
+511;Trzaskający mróz;Specjalna;0;N/D;Trzaskający mróz;Scoia'tael;;Brak;N/D
+512;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Scoia'tael;;Brak;N/D
+513;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Scoia'tael;;Brak;N/D
+514;Róg dowódcy;Specjalna;0;N/D;Róg dowódcy;Scoia'tael;;Brak;N/D
+515;Havekarski medyk;Jednostka;0;Jednostki strzeleckie;Zmartwychwstanie;Scoia'tael;;Brak;N/D
+516;Havekarski medyk;Jednostka;0;Jednostki strzeleckie;Zmartwychwstanie;Scoia'tael;;Brak;N/D
+517;Havekarski medyk;Jednostka;0;Jednostki strzeleckie;Zmartwychwstanie;Scoia'tael;;Brak;N/D
+518;Brygada Vrihedd;Jednostka;5;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+519;Brygada Vrihedd;Jednostka;5;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+520;Elfi harcownik;Jednostka;2;Jednostki strzeleckie;Braterstwo;Scoia'tael;;Brak;N/D
+521;Elfi harcownik;Jednostka;2;Jednostki strzeleckie;Braterstwo;Scoia'tael;;Brak;N/D
+522;Elfi harcownik;Jednostka;2;Jednostki strzeleckie;Braterstwo;Scoia'tael;;Brak;N/D
+523;Havekarskie wsparcie;Jednostka;5;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+524;Havekarskie wsparcie;Jednostka;5;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+525;Havekarskie wsparcie;Jednostka;5;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+526;Krasnolud harcownik;Jednostka;3;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+527;Krasnolud harcownik;Jednostka;3;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+528;Krasnolud harcownik;Jednostka;3;Bliskie starcie;Braterstwo;Scoia'tael;;Brak;N/D
+529;Obrońcy Mahakamu;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+530;Obrońcy Mahakamu;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+531;Obrońcy Mahakamu;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+532;Obrońcy Mahakamu;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+533;Obrońcy Mahakamu;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+534;Zwiadowca z Dol Blathanna;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+535;Zwiadowca z Dol Blathanna;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+536;Zwiadowca z Dol Blathanna;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+537;Milva;Jednostka;10;Jednostki strzeleckie;Wysokie morale;Scoia'tael;;Brak;N/D
+538;Barclay Els;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+539;Vesemir;Jednostka;6;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+540;Schirrú;Jednostka;6;Oblężnicze;Pożoga_K;Scoia'tael;;Brak;N/D
+541;Villentretenmerth;Jednostka;7;Bliskie starcie;Pożoga_K;Scoia'tael;;Brak;N/D
+542;Jaskier;Jednostka;2;Bliskie starcie;Róg dowódcy;Scoia'tael;;Brak;N/D
+543;Yaevinn;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+544;Ciaran aep Easnillien;Jednostka;3;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+545;Riordain;Jednostka;1;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+546;Dennis Cranmer;Jednostka;6;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+547;Kadet Vrihedd;Jednostka;4;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+548;Toruviel;Jednostka;2;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+549;Łucznik z Dol Blathanna;Jednostka;4;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+550;Zoltan Chivay;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+551;Ida Emean aep Sivney;Jednostka;6;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+552;Filavandrel aén Fidháil;Jednostka;6;Bliskie starcie;Zręczność;Scoia'tael;;Brak;Jednostki strzeleckie
+553;Emiel Regis Rohellec Terzieff;Jednostka;5;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+554;Cirilla;Bohater;15;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+555;Geralt z Rivii;Bohater;15;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+556;Triss Merigold;Bohater;7;Bliskie starcie;Brak;Scoia'tael;;Brak;N/D
+557;Eithné;Bohater;10;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+558;Saesenthessis;Bohater;10;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+559;Avallac'h;Bohater;0;Bliskie starcie;Szpiegostwo;Scoia'tael;;Brak;N/D
+560;Isengrim Faoiltiarna;Bohater;10;Bliskie starcie;Wysokie morale;Scoia'tael;;Brak;N/D
+561;Iorveth;Bohater;10;Jednostki strzeleckie;Brak;Scoia'tael;;Brak;N/D
+562;Yennefer z Vengerbergu;Bohater;7;Jednostki strzeleckie;Zmartwychwstanie;Scoia'tael;;Brak;N/D
